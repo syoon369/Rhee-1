@@ -1,11 +1,14 @@
 var express = require('express');
 var app = express();
-var port = 3000;
+const cors = require('cors');
+const PORT = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+app.use(cors());
 
-app.listen(port, function () {
-    console.log('server on');
-});
+app.get('/hello', (req, res) => {
+    res.send({ hello : 'Response' });
+})
+
+app.listen(PORT, () => {
+    console.log(`Server On : http://localhost:${PORT}/`);
+})
