@@ -5,27 +5,72 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hello : [],
+      list : [
+        // {
+        //   id:0,
+        //   title:'0',
+        //   content:'000'
+        // }
+      ],
+      count : 0
     }
+    this.createButton = this.createButton.bind(this);
   }
 
-  componentDidMount() {
-    this._getHello();
-  }
+  // componentDidMount() {
+  //   this._getHello();
+  // }
 
-  _getHello = async() => {
+  getHello = async() => {
     const res = await axios.get('http://localhost:3001/hello');
-    this.setState({ hello : res.data.hello })
-    console.log(this.state.hello);
+    this.setState({id : res.data.hello});
+    console.log(res.data);
+  }
+
+  getData = async() => {
+    const res = await axios.get('http://localhost:3001/data');
+    this.setState({list : res.data});
+    this.setState({count: this.state.list.length});
+    console.log(res.data);
+    console.log(this.state.count);
+  }
+
+  createButton(){
+    console.log(this.state.count+1);
+    console.log(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+    axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+    console.log('Insert complete');
+    this.setState({count: this.state.count + 1});
+  }
+
+  showList(list){
+    var html = '<ul>';
+    var i = 0;
+    while(i < list.length){
+      html = html + `<li>${list[i].id}:${list[i].title}:${list[i].content}</li>`;
+      i = i + 1;
+    }
+    html = html+'</ul>';
+    return html;
   }
 
   render() {
+    const {list} = this.state;
+    let code = this.showList(list);
     return(
       <>
         <h3>get DB data</h3>
-        <p>{this.state.hello}</p>
-        <button action="/create_process" method="post">
-          button
+        <p>{this.state.id}</p>
+        <div dangerouslySetInnerHTML={{__html: code}}></div>
+        {/* {code} */}
+        <button onClick={this.getHello} method="get">
+          hello
+        </button>
+        <button onClick={this.createButton} method="post">
+          post
+        </button>
+        <button onClick={this.getData} method="post">
+          get
         </button>
       </>
     )
