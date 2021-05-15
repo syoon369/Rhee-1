@@ -39,11 +39,11 @@ app.get('/data/:id', (req, res) => {
 });
 
 app.post('/data/create/:id/:title/:content', (req, res) => {
-    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[req.params.id,req.params.title,req.params.coontent],function(error, result){
+    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[req.params.id,req.params.title,req.params.content],function(error, result){
         if(error){
             throw error;
         }
-        res.writeHead(302, {Location:`/data/${res.insertId}`});
+        // res.writeHead(302, {Location:`/data/${res.insertId}`});
         res.end;
     });
 });
