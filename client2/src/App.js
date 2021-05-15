@@ -22,8 +22,11 @@ class App extends Component {
   render() {
     return(
       <>
-        <h3>get DB data(브라우저 개발모드 콘솔확인)</h3>
+        <h3>get DB data</h3>
         <p>{this.state.hello}</p>
+        <button action="/create_process" method="post">
+          button
+        </button>
       </>
     )
   }
