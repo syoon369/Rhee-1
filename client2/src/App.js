@@ -15,6 +15,7 @@ class App extends Component {
       count : 0
     }
     this.createButton = this.createButton.bind(this);
+    this.deleteButton = this.deleteButton.bind(this);
   }
 
   // componentDidMount() {
@@ -41,6 +42,17 @@ class App extends Component {
     axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
     console.log('Insert complete');
     this.setState({count: this.state.count + 1});
+  }
+
+  // updateButton(){
+  //   axios.post(`http://localhost:3001/data/update/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+  // }
+
+  deleteButton(){
+    axios.delete(`http://localhost:3001/data/delete/${this.state.count}`);
+    console.log(`http://localhost:3001/data/delete/${this.state.count}`);
+    this.setState({count: this.state.count - 1});
+    console.log(this.state.count-1);
   }
 
   showList(list){
@@ -71,6 +83,9 @@ class App extends Component {
         </button>
         <button onClick={this.getData} method="post">
           get
+        </button>
+        <button onClick={this.deleteButton} method="post">
+          delete
         </button>
       </>
     )

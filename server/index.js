@@ -48,6 +48,26 @@ app.post('/data/create/:id/:title/:content', (req, res) => {
     });
 });
 
+// app.post('/data/update/:id/:title/:content', (req, res) => {
+//     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[req.params.id,req.params.title,req.params.content],function(error, result){
+//         if(error){
+//             throw error;
+//         }
+//         // res.writeHead(302, {Location:`/data/${res.insertId}`});
+//         res.end;
+//     });
+// });
+
+app.delete('/data/delete/:id', (req, res) => {
+    db.query(`DELETE FROM topic WHERE id = ?`,[req.params.id],function(error, result){
+        if(error){
+            throw error;
+        }
+        // res.writeHead(302, {Location:`/data/${res.insertId}`});
+        res.end;
+    });
+});
+
 
 
 app.listen(PORT, () => {
