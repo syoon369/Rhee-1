@@ -29,6 +29,7 @@ const Item = styled.li`
     height: 50px;
     font-size: 18px;
     text-align: center;
+    font-weight: bold;
     :last-child{
         margin-right: 30px;
     }
