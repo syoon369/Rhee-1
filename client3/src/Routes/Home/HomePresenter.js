@@ -16,7 +16,7 @@ import menu3 from "../../img/menuImg(3).jpg";
 import menu4 from "../../img/menuImg(4).jpg";
 
 const MainBox = styled.div`
-    display: flex;
+    display: flex; 
     flex-direction: column;
     align-items: center;
 `;

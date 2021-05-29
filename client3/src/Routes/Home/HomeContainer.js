@@ -22,7 +22,7 @@ export default class extends React.Component {
         this.setState({
             // [e.target.name]:e.target.value
             usertitle: e.target.value
-        }); 
+        });  
     }
 
     ContentChange = (e) => {
@@ -37,13 +37,8 @@ export default class extends React.Component {
         if (isNaN(parseInt(this.state.userid))) {
             console.log("id issue\n");
         }
-<<<<<<< HEAD
         else {
             await axios.post("http://localhost:3302/data", {
-=======
-        else{
-            await axios.post("http://localhost:3001/data",{
->>>>>>> c5be818a99bcffe7763fb86a19a0f7b0290ceb0f
                 // id:this.state.userid,
                 id: parseInt(this.state.userid),
                 title: this.state.usertitle,

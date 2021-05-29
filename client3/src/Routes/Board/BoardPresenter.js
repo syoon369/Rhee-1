@@ -59,7 +59,7 @@ const BoardPresenter = ({
                                 <tr>
                                     <td>아이디</td>
                                     <td>제목</td>
-                                    <td>내용</td>
+                                    <td>내용</td> 
                                 </tr>
                             </thead>
                             <tbody> 
