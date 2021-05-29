@@ -46,16 +46,16 @@ app.post('/', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
-    // var id = req.data.id;
-    // var title = req.data.title;
-    // var content = req.data.content;
-    // console.log(req.query,'data posted');
-    console.log(req.body.id, "req");
     const d = {
         id:req.body.id,
         title:req.body.title,
         content:req.body.content
     }
+    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[d.id, d.title, d.content], function(error, result){
+        if(error){
+            throw error;
+        }
+    })
     res.send(d);
     // res.send("{ id : " + id + "\ntitle : " + title + "\ncontent : " + content+ " }" );
     // console.log(res, "res");
