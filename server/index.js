@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 const cors = require('cors');
 //const body = require('body-parser');
-const PORT = process.env.PORT || 3302;
 const PORT = process.env.PORT || 3001;
 const db = require('./config/db');
 // const { response, urlencoded } = require('express');
@@ -11,9 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({extend:true})); 
 app.use(cors());
 
-app.listen(PORT, () => {
-    console.log(`Server On : http://localhost:${PORT}/`);
-});
 app.use(express.urlencoded());
 app.use(express.json());
 
@@ -53,18 +49,16 @@ app.post('/', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
-    console.log(req.body[1]);
-    res.send(req.body[1]);
-    // var id = req.data.id;
-    // var title = req.data.title;
-    // var content = req.data.content;
-    // console.log(req.query,'data posted');
-    console.log(req.body.id, "req");
     const d = {
         id:req.body.id,
         title:req.body.title,
         content:req.body.content
     }
+    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[d.id, d.title, d.content], function(error, result){
+        if(error){
+            throw error;
+        }
+    })
     res.send(d);
     // res.send("{ id : " + id + "\ntitle : " + title + "\ncontent : " + content+ " }" );
     // console.log(res, "res");
