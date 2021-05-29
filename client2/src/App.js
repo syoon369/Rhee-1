@@ -41,14 +41,6 @@ class App extends Component {
   // }
 
   createButton(){
-<<<<<<< HEAD
-=======
-    console.log(this.state.count+1);
-    console.log(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
-    axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
-    console.log('Insert complete');
-    this.setState({count: this.state.count + 1});
->>>>>>> c5be818a99bcffe7763fb86a19a0f7b0290ceb0f
     axios.post('http://localhost:3001',{
         id : '69',
         title : 'sex',
