@@ -46,17 +46,14 @@ app.post('/', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
-<<<<<<< HEAD
     console.log(req.body.id, "req");
-=======
->>>>>>> c5be818a99bcffe7763fb86a19a0f7b0290ceb0f
     const d = {
         id: req.body.id,
         title: req.body.title,
         content: req.body.content
     }
-    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[d.id, d.title, d.content], function(error, result){
-        if(error){
+    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [d.id, d.title, d.content], function (error, result) {
+        if (error) {
             throw error;
         }
     })
@@ -82,14 +79,11 @@ app.post('/data', (req, res) => {
 });
 
 // app.post('/data/create/:id/:title/:content', (req, res) => {
-<<<<<<< HEAD
 //     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [req.params.id, req.params.title, req.params.content], function (error, result) {
 //         if (error) {
-=======
 // app.post('/data/update/:id/:title/:content', (req, res) => {
 //     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[req.params.id,req.params.title,req.params.content],function(error, result){
 //         if(error){
->>>>>>> c5be818a99bcffe7763fb86a19a0f7b0290ceb0f
 //             throw error;
 //         }
 //         // res.writeHead(302, {Location:`/data/${res.insertId}`});
@@ -97,7 +91,6 @@ app.post('/data', (req, res) => {
 //     });
 // });
 
-<<<<<<< HEAD
 // app.delete('/data/delete/:id', (req, res) => {
 //     db.query(`DELETE FROM topic WHERE id = ?`, [req.params.id], function (error, result) {
 //         if (error) {
@@ -107,10 +100,10 @@ app.post('/data', (req, res) => {
 //         res.end;
 //     });
 // });
-=======
+
 app.delete('/data/delete/:id', (req, res) => {
-    db.query(`DELETE FROM topic WHERE id = ?`,[req.params.id],function(error, result){
-        if(error){
+    db.query(`DELETE FROM topic WHERE id = ?`, [req.params.id], function (error, result) {
+        if (error) {
             throw error;
         }
         // res.writeHead(302, {Location:`/data/${res.insertId}`});
@@ -120,4 +113,3 @@ app.delete('/data/delete/:id', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);
 });
->>>>>>> c5be818a99bcffe7763fb86a19a0f7b0290ceb0f

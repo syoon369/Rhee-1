@@ -59,10 +59,10 @@ const BoardPresenter = ({
                                 <tr>
                                     <td>아이디</td>
                                     <td>제목</td>
-                                    <td>내용</td> 
+                                    <td>내용</td>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <tbody>
                                 {data.map(list => (
                                     <>
                                         <tr class={"data_id"} key={list.id}>{list.id}</tr>

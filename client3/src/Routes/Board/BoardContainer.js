@@ -61,7 +61,7 @@ export default class extends React.Component {
                 .catch((error) => {
                     console.log(error);
                 });
-                window.location.reload();
+            window.location.reload();
         }
     }
 
@@ -87,7 +87,7 @@ export default class extends React.Component {
                 .catch((error) => {
                     console.log(error);
                 });
-                window.location.reload();
+            window.location.reload();
         }
     }
 
@@ -104,7 +104,7 @@ export default class extends React.Component {
                 loading: false
             })
         }
-    }  
+    }
 
     render() {
         const { data, userid, usertitle, usercontent, IdChange, TitleChange, ContentChange, btnClick, btnDelete, loading } = this.state;
