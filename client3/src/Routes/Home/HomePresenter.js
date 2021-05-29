@@ -20,7 +20,7 @@ const MainBox = styled.div`
     flex-direction: column;
     align-items: center;
 `;
-
+ 
 /* Video Box */
 const VideoBox = styled.div`
     display: flex;

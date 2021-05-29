@@ -22,7 +22,7 @@ export default class extends React.Component {
         this.setState({
             // [e.target.name]:e.target.value
             usertitle: e.target.value
-        });
+        }); 
     }
 
     ContentChange = (e) => {

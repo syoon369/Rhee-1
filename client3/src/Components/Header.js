@@ -82,5 +82,5 @@ export default withRouter(({ location: { pathname } }) => (
                 <SLink to="/board">board</SLink>
             </Item>
         </List>
-    </Header>
+    </Header> 
 ));

@@ -62,7 +62,7 @@ const BoardPresenter = ({
                                     <td>내용</td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody> 
                                 {data.map(list => (
                                     <>
                                         <tr class={"data_id"} key={list.id}>{list.id}</tr>

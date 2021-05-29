@@ -104,7 +104,7 @@ export default class extends React.Component {
                 loading: false
             })
         }
-    }
+    } 
 
     render() {
         const { data, userid, usertitle, usercontent, IdChange, TitleChange, ContentChange, btnClick, btnDelete, loading } = this.state;
