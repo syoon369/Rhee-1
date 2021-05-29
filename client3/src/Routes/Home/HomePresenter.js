@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import PropTypes, { array } from "prop-types";
 import styled from "styled-components";
 import picto1 from "../../img/picto1.png";
 import picto2 from "../../img/picto2.png";
@@ -187,7 +188,16 @@ const PickCont = styled.p`
     text-align: center;
 `;
 
-export default withRouter(({ location: { pathname } }) => (
+const HomePresenter = ({
+    data,
+    userid,
+    usertitle,
+    usercontent,
+    btnClick,
+    IdChange,
+    TitleChange,
+    ContentChange
+    }) => (
     <>
         <MainBox>
             <VideoBox>
@@ -290,6 +300,23 @@ export default withRouter(({ location: { pathname } }) => (
                     </PickList>
                 </PickListBox>
             </PickBox>
+            <input onChange={IdChange} type="text" name="userid"/>
+            <input onChange={TitleChange} type="text" name="usertitle"/>
+            <input onChange={ContentChange} type="text" name="usercontent"/>
+            <button onClick={btnClick}>submit</button>
         </MainBox>
     </>
-))
+);
+
+HomePresenter.propTypes={
+    data:PropTypes.array,
+    userid:PropTypes.string,
+    usertitle:PropTypes.string,
+    usercontent:PropTypes.string,
+    IdChange:PropTypes.func.isRequired,
+    TitleChange:PropTypes.func.isRequired,
+    ContentChange:PropTypes.func.isRequired,
+    btnClick:PropTypes.func.isRequired
+}
+
+export default HomePresenter;
