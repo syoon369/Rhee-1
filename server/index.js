@@ -10,9 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({extend:true})); 
 app.use(cors());
 
-app.use(express.urlencoded());
-app.use(express.json());
-
 app.get('/hello', (req, res) => {
     res.send({ hello: 'asdf' });
     console.log("Get hello")
