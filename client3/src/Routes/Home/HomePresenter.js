@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import PropTypes, { array } from "prop-types";
 import styled from "styled-components";
 import picto1 from "../../img/picto1.png";
 import picto2 from "../../img/picto2.png";
@@ -25,24 +26,55 @@ const VideoBox = styled.div`
     display: flex;
     width: 100%;
     height: 450px;
-    background-size: contain;
-    background-image: url("../../img/menuImg(2).jpg");
+`;
+
+const VideoDiv = styled.div`
+    width: 100%;
+    height: 100%;
 `;
 
 const VideoImg = styled.img`
     width: 100%;
+    height: 100%;
+    z-index: 1;
+`;
+
+const Hr = styled.hr`
+    height: 3px;
+    background-color: white;
+    border: none;
 `;
 
 const LeftLink = styled(Link)`
+    position: absolute;
+    left: 0;
+    text-align: center;
+    line-height: 450px;
     width: 10%;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
 `;
 
 const RightLink = styled(Link)`
+    position: absolute;
+    right: 0;
+    text-align: center;
+    line-height: 450px;
     width: 10%;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
 `;
 
 const VideoCon = styled.div`
+    position: absolute;
+    top: 303px;
+    left: 10%;
     width: 80%;
+    z-index: 2;
 `;
 
 const VideoHead = styled.h1`
@@ -187,14 +219,29 @@ const PickCont = styled.p`
     text-align: center;
 `;
 
-export default withRouter(({ location: { pathname } }) => (
+const HomePresenter = ({
+    data,
+    userid,
+    usertitle,
+    usercontent,
+    btnClick,
+    btnDelete,
+    IdChange,
+    TitleChange,
+    ContentChange
+}) => (
     <>
+
         <MainBox>
             <VideoBox>
-                {/* <VideoImg src={menu1} /> */}
-                <LeftLink>←</LeftLink>
-                <VideoCon></VideoCon>
-                <RightLink>→</RightLink>
+                <VideoDiv>
+                    <VideoImg src={menu1} />
+                    <LeftLink>←</LeftLink>
+                    <VideoCon>
+                        <Hr />
+                    </VideoCon>
+                    <RightLink>→</RightLink>
+                </VideoDiv>
             </VideoBox>
             <JournalBox>
                 <JournalUL>
@@ -290,6 +337,25 @@ export default withRouter(({ location: { pathname } }) => (
                     </PickList>
                 </PickListBox>
             </PickBox>
+            <input onChange={IdChange} type="text" name="userid" />
+            <input onChange={TitleChange} type="text" name="usertitle" />
+            <input onChange={ContentChange} type="text" name="usercontent" />
+            <button onClick={btnClick}>submit</button>
+            <button onClick={btnDelete}>delete</button>
         </MainBox>
     </>
-))
+);
+
+HomePresenter.propTypes = {
+    data: PropTypes.array,
+    userid: PropTypes.string,
+    usertitle: PropTypes.string,
+    usercontent: PropTypes.string,
+    IdChange: PropTypes.func.isRequired,
+    TitleChange: PropTypes.func.isRequired,
+    ContentChange: PropTypes.func.isRequired,
+    btnClick: PropTypes.func.isRequired,
+    btnDelete: PropTypes.func.isRequired
+}
+
+export default HomePresenter;

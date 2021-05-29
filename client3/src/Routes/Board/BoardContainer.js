@@ -1,5 +1,5 @@
 import React from "react";
-import HomePresenter from "./HomePresenter";
+import BoardPresenter from "./BoardPresenter";
 import { userApi } from '../../api';
 import axios from "axios";
 
@@ -8,7 +8,8 @@ export default class extends React.Component {
         data: null,
         userid: "",
         usertitle: "",
-        usercontent: ""
+        usercontent: "",
+        loading: true
     }
 
     IdChange = (e) => {
@@ -32,6 +33,10 @@ export default class extends React.Component {
         });
     }
 
+    btnWrite = async () => {
+
+    }
+
     btnClick = async () => {
         console.log(`${this.state.userid}\n${this.state.usertitle}\n${this.state.usercontent}`);
         if (isNaN(parseInt(this.state.userid))) {
@@ -47,7 +52,7 @@ export default class extends React.Component {
                 .then((response) => {
                     if (response.status === 200) {
                         // console.log(response);
-                        console.log(response.data);
+                        console.log("response.data : " + response.data);
                         // console.log(response.status);
                     } else {
                         console.log("no");
@@ -56,6 +61,7 @@ export default class extends React.Component {
                 .catch((error) => {
                     console.log(error);
                 });
+                window.location.reload();
         }
     }
 
@@ -81,6 +87,7 @@ export default class extends React.Component {
                 .catch((error) => {
                     console.log(error);
                 });
+                window.location.reload();
         }
     }
 
@@ -91,15 +98,19 @@ export default class extends React.Component {
                 data
             });
         } catch {
-            this.setState({ data: null })
+            this.setState({ data: "nothing" })
+        } finally {
+            this.setState({
+                loading: false
+            })
         }
     }
 
     render() {
-        const { data } = this.state;
+        const { data, userid, usertitle, usercontent, IdChange, TitleChange, ContentChange, btnClick, btnDelete, loading } = this.state;
         console.log(this.state);
         return (
-            <HomePresenter
+            <BoardPresenter
                 data={data}
                 userid={this.userid}
                 usertitle={this.usertitle}
@@ -108,7 +119,8 @@ export default class extends React.Component {
                 TitleChange={this.TitleChange}
                 ContentChange={this.ContentChange}
                 btnClick={this.btnClick}
-                btnDelete={this.btnDelete} />
+                btnDelete={this.btnDelete}
+                loading={loading} />
         )
     }
 }
