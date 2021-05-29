@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,17 +16,14 @@ class App extends Component {
     this.createButton = this.createButton.bind(this);
     this.deleteButton = this.deleteButton.bind(this);
   }
-
   // componentDidMount() {
   //   this._getHello();
   // }
-
   getHello = async() => {
     const res = await axios.get('http://localhost:3001/hello');
     this.setState({id : res.data.hello});
     console.log(res.data);
   }
-
   getData = async() => {
     const res = await axios.get('http://localhost:3001/data');
     this.setState({list : res.data});
@@ -45,6 +41,14 @@ class App extends Component {
   // }
 
   createButton(){
+<<<<<<< HEAD
+=======
+    console.log(this.state.count+1);
+    console.log(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+    axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+    console.log('Insert complete');
+    this.setState({count: this.state.count + 1});
+>>>>>>> c5be818a99bcffe7763fb86a19a0f7b0290ceb0f
     axios.post('http://localhost:3001',{
         id : '69',
         title : 'sex',
@@ -60,14 +64,12 @@ class App extends Component {
   // updateButton(){
   //   axios.post(`http://localhost:3001/data/update/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
   // }
-
   deleteButton(){
     axios.delete(`http://localhost:3001/data/delete/${this.state.count}`);
     console.log(`http://localhost:3001/data/delete/${this.state.count}`);
     this.setState({count: this.state.count - 1});
     console.log(this.state.count-1);
   }
-
   showList(list){
     var html = '<ul>';
     var i = 0;
@@ -78,7 +80,6 @@ class App extends Component {
     html = html+'</ul>';
     return html;
   }
-
   render() {
     const {list} = this.state;
     let code = this.showList(list);
@@ -104,5 +105,4 @@ class App extends Component {
     )
   }
 }
-
 export default App;
