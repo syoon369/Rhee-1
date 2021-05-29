@@ -43,7 +43,7 @@ export default class extends React.Component {
             console.log("id issue\n");
         }
         else {
-            await axios.post("http://localhost:3302/data", {
+            await axios.post("http://localhost:3001/data", {
                 // id:this.state.userid,
                 id: parseInt(this.state.userid),
                 title: this.state.usertitle,
