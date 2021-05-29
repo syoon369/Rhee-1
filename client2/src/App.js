@@ -36,12 +36,25 @@ class App extends Component {
     console.log(this.state.count);
   }
 
+  // createButton(){
+  //   console.log(this.state.count+1);
+  //   console.log(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+  //   axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+  //   console.log('Insert complete');
+  //   this.setState({count: this.state.count + 1});
+  // }
+
   createButton(){
-    console.log(this.state.count+1);
-    console.log(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
-    axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
-    console.log('Insert complete');
-    this.setState({count: this.state.count + 1});
+    axios.post('http://localhost:3001',{
+        id : '69',
+        title : 'sex',
+        content : 'yeah'
+    });
+    // console.log(this.state.count+1);
+    // console.log(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+    // axios.post(`http://localhost:3001/data/create/${this.state.count+1}/${this.state.count+1}/${this.state.count+1}`);
+    // console.log('Insert complete');
+    // this.setState({count: this.state.count + 1});
   }
 
   // updateButton(){
