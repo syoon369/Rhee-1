@@ -59,23 +59,23 @@ app.post('/data', (req, res) => {
     })
     res.send(d);
 
-    if (req.body.title != null) {
-        db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [req.body.id, req.body.title, req.body.content], function (error, result) {
-            if (error) {
-                throw error;
-            }
-            res.end;
-        });
-    }
+    // if (req.body.title != null) {
+    //     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [req.body.id, req.body.title, req.body.content], function (error, result) {
+    //         if (error) {
+    //             throw error;
+    //         }
+    //         res.end;
+    //     });
+    // }
 
-    else {
-        db.query(`DELETE FROM topic WHERE id = ?`, [req.body.id], function (error, result) {
-            if (error) {
-                throw error;
-            }
-            res.end;
-        });
-    }
+    // else {
+    //     db.query(`DELETE FROM topic WHERE id = ?`, [req.body.id], function (error, result) {
+    //         if (error) {
+    //             throw error;
+    //         }
+    //         res.end;
+    //     });
+    // }
 });
 
 // app.post('/data/create/:id/:title/:content', (req, res) => {
