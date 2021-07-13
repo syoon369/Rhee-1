@@ -33,10 +33,6 @@ export default class extends React.Component {
         });
     }
 
-    btnWrite = async () => {
-
-    }
-
     btnClick = async () => {
         console.log(`${this.state.userid}\n${this.state.usertitle}\n${this.state.usercontent}`);
         if (isNaN(parseInt(this.state.userid))) {

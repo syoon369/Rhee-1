@@ -59,48 +59,7 @@ app.post('/data', (req, res) => {
         }
     })
     res.send(d);
-
-    // if (req.body.title != null) {
-    //     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [req.body.id, req.body.title, req.body.content], function (error, result) {
-    //         if (error) {
-    //             throw error;
-    //         }
-    //         res.end;
-    //     });
-    // }
-
-    // else {
-    //     db.query(`DELETE FROM topic WHERE id = ?`, [req.body.id], function (error, result) {
-    //         if (error) {
-    //             throw error;
-    //         }
-    //         res.end;
-    //     });
-    // }
 });
-
-// app.post('/data/create/:id/:title/:content', (req, res) => {
-//     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [req.params.id, req.params.title, req.params.content], function (error, result) {
-//         if (error) {
-// app.post('/data/update/:id/:title/:content', (req, res) => {
-//     db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`,[req.params.id,req.params.title,req.params.content],function(error, result){
-//         if(error){
-//             throw error;
-//         }
-//         // res.writeHead(302, {Location:`/data/${res.insertId}`});
-//         res.end;
-//     });
-// });
-
-// app.delete('/data/delete/:id', (req, res) => {
-//     db.query(`DELETE FROM topic WHERE id = ?`, [req.params.id], function (error, result) {
-//         if (error) {
-//             throw error;
-//         }
-//         // res.writeHead(302, {Location:`/data/${res.insertId}`});
-//         res.end;
-//     });
-// });
 
 app.delete('/data/delete/:id', (req, res) => {
     db.query(`DELETE FROM board WHERE board_id = ?`, [req.params.id], function (error, result) {
@@ -111,6 +70,42 @@ app.delete('/data/delete/:id', (req, res) => {
         res.end;
     });
 });
+
+app.post('/signup', (req, res) => {
+    console.log("Get Post");
+    const d = {
+        id: req.body.id,
+        password: req.body.password,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        nickname: req.body.nickname,
+        birth: req.body.birth,
+        sex: req.body.sex
+    }
+    console.log(d);
+    db.query(`INSERT INTO user(user_id, password, f_name, l_name, nickname, birth_date, sex) VALUES (?,?,?,?,?,?,?)`, [d.id, d.password, d.firstname, d.lastname, d.nickname, d.birth, d.sex], function (error, result) {
+        if (error) {
+            throw error;
+        }
+    })
+    res.send(d);
+});
+
+app.post('/signin', (req, res) => {
+    console.log("Get Post");
+    const d = {
+        id: req.body.id,
+        password: req.body.password 
+    }
+    console.log(d);
+    db.query(`SELECT user_id, f_name, l_name, nickname FROM user WHERE user_id=? and password=?`, [d.id, d.password], function (error, result) {
+        if (error) {
+            throw error;
+        }
+        res.send(result);
+    })
+});
+
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);
 });

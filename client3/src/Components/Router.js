@@ -4,6 +4,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Home from "../Routes/Home";
 import Board from "../Routes/Board";
+import Login from "../Routes/Login";
+import Sign from "../Routes/Sign";
 
 export default () => (
     <Router>
@@ -12,6 +14,8 @@ export default () => (
             <Switch> {/* Switch : 한 번에 오직 하나의 Route만 render */}
                 <Route path="/" exact component={Home} /> {/*해당 path로 가면 Home 출력 */}
                 <Route path="/board" component={Board} />
+                <Route path="/login" component={Login}/>
+                <Route path="/sign" component={Sign}/>
                 {/* <Route path="/community" component={Community} />
                 <Route path="/editorial" component={Editorial} />
                 <Route path="/about" component={About} />

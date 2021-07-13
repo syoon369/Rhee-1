@@ -51,7 +51,6 @@ const BoardPresenter = ({
                         <input onChange={IdChange} type="text" name="userid" />
                         <input onChange={TitleChange} type="text" name="usertitle" />
                         <input onChange={ContentChange} type="text" name="usercontent" />
-                        <button onClick={btnWrite}>글쓰기</button>
                         <button onClick={btnClick}>submit</button>
                         <button onClick={btnDelete}>delete</button>
                         <table>
