@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     console.log("Get main")
 });
 app.get('/data', (req, res) => {
-    db.query(`SELECT * FROM topic`, function (error, topics) {
+    db.query(`SELECT * FROM board`, function (error, topics) {
         if (error) {
             throw error;
         }
@@ -30,7 +30,7 @@ app.get('/data', (req, res) => {
     console.log("Get datas")
 });
 app.get('/data/:id', (req, res) => {
-    db.query(`SELECT * FROM topic WHERE id=?`, [req.params.id], function (error, topic) {
+    db.query(`SELECT * FROM board WHERE board_id=?`, [req.params.id], function (error, topic) {
         if (error) {
             throw error;
         }
@@ -49,10 +49,11 @@ app.post('/data', (req, res) => {
     console.log(req.body.id, "req");
     const d = {
         id: req.body.id,
+        writer: req.body.writer,
         title: req.body.title,
         content: req.body.content
     }
-    db.query(`INSERT INTO topic(id, title, content) VALUES (?,?,?)`, [d.id, d.title, d.content], function (error, result) {
+    db.query(`INSERT INTO board(board_id, writer, title, content) VALUES (?,?,?,?)`, [d.id, d.writer, d.title, d.content], function (error, result) {
         if (error) {
             throw error;
         }
@@ -102,7 +103,7 @@ app.post('/data', (req, res) => {
 // });
 
 app.delete('/data/delete/:id', (req, res) => {
-    db.query(`DELETE FROM topic WHERE id = ?`, [req.params.id], function (error, result) {
+    db.query(`DELETE FROM board WHERE board_id = ?`, [req.params.id], function (error, result) {
         if (error) {
             throw error;
         }
