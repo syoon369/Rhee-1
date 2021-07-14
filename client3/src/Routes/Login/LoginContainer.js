@@ -30,17 +30,18 @@ export default class extends React.Component {
             .then((response) => {
                 if (response.status === 200) {
                     if(response.data.length>0){//login success
-                        console.log(response.data)
-                        window.location.replace("/");
+                        //console.log(response.data);
+                        // window.location.replace("/");
                     }else{//login fail
-                        window.alert("login failed!");
+                      //  window.alert("login failed!");
+                      //console.log(response.cookie);
                     }
                 } else {
-                    console.log("no");
+                    //console.log("no");
                 }
             })
             .catch((error) => {
-                console.log(error);
+                //console.log(error);
             });
         // window.location.reload();
     }

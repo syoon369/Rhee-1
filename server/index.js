@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 const cors = require('cors');
+var session = require('express-session')
+var MySQLStore= require('express-mysql-session')(session)
 //const body = require('body-parser');
 const PORT = process.env.PORT || 3001;
 const db = require('./config/db');
@@ -9,44 +11,63 @@ const db = require('./config/db');
 app.use(express.json());
 app.use(express.urlencoded({ extend: true }));
 app.use(cors());
+app.use(session({
+    secret: 'rhee123',
+    resave: false,
+    saveUninitialized: true,
+    store:new MySQLStore({
+        host:'localhost',
+        port:3306,
+        user:'root',
+        password:'1234',
+        database:'rhee'
+    }),
+    cookie: {	
+        httpOnly: true,
+        Secure: true,
+        expires: 1000* 60 * 1
+    }
+  }))
+  
 
 app.get('/hello', (req, res) => {
     res.send({ hello: 'asdf' });
     console.log("Get hello")
 });
 app.get('/', (req, res) => {
-    res.send({ main: 'This is main page.' });
-    console.log("Get main")
+    console.log("Get /");
+    //res.send("/");
 });
+
+
 app.get('/data', (req, res) => {
+    console.log("Get Data");
     db.query(`SELECT * FROM board`, function (error, topics) {
         if (error) {
             throw error;
         }
         res.send(topics);
         //console.log(topics);
-        console.log(topics);
     });
-    console.log("Get datas")
 });
 app.get('/data/:id', (req, res) => {
+    console.log("Get Data:id");
     db.query(`SELECT * FROM board WHERE board_id=?`, [req.params.id], function (error, topic) {
         if (error) {
             throw error;
         }
         res.send(topic);
-        console.log(topic);
         res.end();
     });
 });
 
 app.post('/', (req, res) => {
-    console.log(req.body);
+    console.log("Post /");
     res.send(req.body);
 });
 
 app.post('/data', (req, res) => {
-    console.log(req.body.id, "req");
+    console.log("Post Data");
     const d = {
         id: req.body.id,
         writer: req.body.writer,
@@ -62,6 +83,7 @@ app.post('/data', (req, res) => {
 });
 
 app.delete('/data/delete/:id', (req, res) => {
+    console.log("Delete Data");
     db.query(`DELETE FROM board WHERE board_id = ?`, [req.params.id], function (error, result) {
         if (error) {
             throw error;
@@ -69,10 +91,10 @@ app.delete('/data/delete/:id', (req, res) => {
         // res.writeHead(302, {Location:`/data/${res.insertId}`});
         res.end;
     });
-});
+});``
 
 app.post('/signup', (req, res) => {
-    console.log("Get Post");
+    console.log("Post SignUp");
     const d = {
         id: req.body.id,
         password: req.body.password,
@@ -92,17 +114,20 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
-    console.log("Get Post");
+    console.log("Post Singin");
     const d = {
         id: req.body.id,
-        password: req.body.password 
+        password: req.body.password,
     }
     console.log(d);
     db.query(`SELECT user_id, f_name, l_name, nickname FROM user WHERE user_id=? and password=?`, [d.id, d.password], function (error, result) {
         if (error) {
             throw error;
         }
-        res.send(result);
+        req.session.user_id = d.id;
+        req.session.save(function(){
+           res.redirect('/')
+        })
     })
 });
 
