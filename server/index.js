@@ -38,7 +38,12 @@ app.get('/', (req, res) => {
     req.session.where = "Get /";
     req.session.save(function(){
         console.log(req.session);
-        res.sendStatus(200);
+        if(req.session.user_id != null){
+            console.log(req.session.user_id);
+            res.send(req.session.user_id);
+        }else {
+            res.sendStatus(204);
+        }
      });
     //res.send("/");
 });
@@ -128,17 +133,21 @@ app.post('/signin', (req, res) => {
         password: req.body.password,
     }
     console.log(d);
-    // db.query(`SELECT user_id, f_name, l_name, nickname FROM user WHERE user_id=? and password=?`, [d.id, d.password], function (error, result) {
-    //     if (error) {
-    //         throw error;
-    //     }
-        req.session.user_id = d.id;
-        req.session.save(function(){
-            console.log(req.session);
-            res.redirect('/');
-        })
-        // res.sendStatus(200);
-    // })
+    db.query(`SELECT user_id, f_name, l_name, nickname FROM user WHERE user_id=? and password=?`, [d.id, d.password], function (error, result) {
+        if (error) {
+            res.sendStatus(204);
+            throw error;
+        }
+        console.log(result.length);
+        if(result.length===0){
+            res.sendStatus(204);
+        }else {
+            req.session.user_id = result[0].user_id;
+            req.session.save(function(){
+                res.send(req.session.user_id);
+            })
+        }
+    })
 });
 
 app.listen(PORT, () => {

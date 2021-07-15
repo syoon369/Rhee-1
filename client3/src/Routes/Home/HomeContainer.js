@@ -8,7 +8,8 @@ export default class extends React.Component {
         data: null,
         userid: "",
         usertitle: "",
-        usercontent: ""
+        usercontent: "",
+        logined:""
     }
 
     IdChange = (e) => {
@@ -85,14 +86,15 @@ export default class extends React.Component {
     }
 
     async componentDidMount() {
-        try {
-            const { data: data } = await userApi.load();
-            this.setState({
-                data
-            });
-        } catch {
-            this.setState({ data: null })
-        }
+        // try {
+        //     const { data: data } = await userApi.load();
+        //     this.setState({
+        //         data
+        //     });
+        // } catch {
+        //     this.setState({ data: null })
+        // }
+        console.log(window.sessionStorage);
     }
 
     render() {

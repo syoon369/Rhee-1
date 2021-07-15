@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import GlobalStyles from "./GlobalStyles";
-import Router from './Router';
+import Route1 from './Router';
 
 class App extends Component {
   render() {
     return (
       <>
         <GlobalStyles />
-        <Router />
+        <Route1 />
       </>
     );
   }

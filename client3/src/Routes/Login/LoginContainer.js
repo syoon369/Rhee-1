@@ -1,6 +1,6 @@
+import axios from "axios";
 import React from "react";
 import LoginPresenter from "./LoginPresenter";
-import axios from "axios";
 
 export default class extends React.Component {
     state = {
@@ -27,22 +27,22 @@ export default class extends React.Component {
             id: this.state.id,
             password: this.state.password
         },{withCredentials: true})
-            // .then((response) => {
-            //     // if (response.status === 200) {
-            //     //     if(response.data.length>0){//login success
-            //     //         //console.log(response.data);
-            //     //         // window.location.replace("/");
-            //     //     }else{//login fail
-            //     //       //  window.alert("login failed!");
-            //     //       //console.log(response.cookie);
-            //     //     }
-            //     // } else {
-            //     //     //console.log("no");
-            //     // }
-            // })
-            // .catch((error) => {
-            //     //console.log(error);
-            // });
+            .then((response) => 
+            {
+                console.log(response.status);
+                 if (response.status === 200) {//login fail
+                    if(response.data){
+                      window.location.assign("/");
+                      window.sessionStorage.setItem("islogin",true);
+                      window.sessionStorage.setItem("user",response.data);
+                    }
+                 }else{
+                    window.alert("다시해라");//login success
+                    }
+            })
+            .catch((error) => {
+                //console.log(error);
+            });
         // window.location.reload();
     }
 

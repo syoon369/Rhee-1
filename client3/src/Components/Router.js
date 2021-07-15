@@ -7,7 +7,10 @@ import Board from "../Routes/Board";
 import Login from "../Routes/Login";
 import Sign from "../Routes/Sign";
 
-export default () => (
+class Route1 extends Router{
+
+    render(){
+        return(
     <Router>
         <>
             <Header />
@@ -25,4 +28,8 @@ export default () => (
             <Footer />
         </>
     </Router>
-);
+        )
+    }
+}
+
+export default Route1;
