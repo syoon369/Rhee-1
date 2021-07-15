@@ -26,23 +26,23 @@ export default class extends React.Component {
             // id:this.state.userid,
             id: this.state.id,
             password: this.state.password
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    if(response.data.length>0){//login success
-                        //console.log(response.data);
-                        // window.location.replace("/");
-                    }else{//login fail
-                      //  window.alert("login failed!");
-                      //console.log(response.cookie);
-                    }
-                } else {
-                    //console.log("no");
-                }
-            })
-            .catch((error) => {
-                //console.log(error);
-            });
+        },{withCredentials: true})
+            // .then((response) => {
+            //     // if (response.status === 200) {
+            //     //     if(response.data.length>0){//login success
+            //     //         //console.log(response.data);
+            //     //         // window.location.replace("/");
+            //     //     }else{//login fail
+            //     //       //  window.alert("login failed!");
+            //     //       //console.log(response.cookie);
+            //     //     }
+            //     // } else {
+            //     //     //console.log("no");
+            //     // }
+            // })
+            // .catch((error) => {
+            //     //console.log(error);
+            // });
         // window.location.reload();
     }
 

@@ -10,7 +10,8 @@ const db = require('./config/db');
 
 app.use(express.json());
 app.use(express.urlencoded({ extend: true }));
-app.use(cors());
+app.use(cors({credentials: true,origin:true}));
+app.set('trust proxy', true);
 app.use(session({
     secret: 'rhee123',
     resave: false,
@@ -23,32 +24,39 @@ app.use(session({
         database:'rhee'
     }),
     cookie: {	
-        httpOnly: true,
-        Secure: true,
-        expires: 1000* 60 * 1
+        secure: false
     }
   }))
-  
 
 app.get('/hello', (req, res) => {
     res.send({ hello: 'asdf' });
     console.log("Get hello")
 });
+
 app.get('/', (req, res) => {
     console.log("Get /");
+    req.session.where = "Get /";
+    req.session.save(function(){
+        console.log(req.session);
+        res.sendStatus(200);
+     });
     //res.send("/");
 });
 
 
 app.get('/data', (req, res) => {
     console.log("Get Data");
-    db.query(`SELECT * FROM board`, function (error, topics) {
-        if (error) {
-            throw error;
-        }
-        res.send(topics);
-        //console.log(topics);
-    });
+    req.session.where = "Get data";
+    req.session.save(function(){
+        console.log(req.session);
+        db.query(`SELECT * FROM board`, function (error, topics) {
+            if (error) {
+                throw error;
+            }
+            res.send(topics);
+            //console.log(topics);
+        });
+     });
 });
 app.get('/data/:id', (req, res) => {
     console.log("Get Data:id");
@@ -120,15 +128,17 @@ app.post('/signin', (req, res) => {
         password: req.body.password,
     }
     console.log(d);
-    db.query(`SELECT user_id, f_name, l_name, nickname FROM user WHERE user_id=? and password=?`, [d.id, d.password], function (error, result) {
-        if (error) {
-            throw error;
-        }
+    // db.query(`SELECT user_id, f_name, l_name, nickname FROM user WHERE user_id=? and password=?`, [d.id, d.password], function (error, result) {
+    //     if (error) {
+    //         throw error;
+    //     }
         req.session.user_id = d.id;
         req.session.save(function(){
-           res.redirect('/')
+            console.log(req.session);
+            res.redirect('/');
         })
-    })
+        // res.sendStatus(200);
+    // })
 });
 
 app.listen(PORT, () => {
