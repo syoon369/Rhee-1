@@ -1,13 +1,22 @@
 import axios from "axios";
 import React from "react";
 import LoginPresenter from "./LoginPresenter";
+import { connect } from 'react-redux';
+import {login, logout} from '../../Redux/redux';
 
-export default class extends React.Component {
+// var isLogined = false;
+
+// exports.setIsLogin = () =>{
+
+//     return isLogined;
+// }
+class LoginContainer extends React.Component {
+
     state = {
         id: "",
-        password: ""
+        password: "",
+        isLogined: false
     }
-
     IdChange = (e)=>{
         this.setState({
             id:e.target.value
@@ -21,7 +30,7 @@ export default class extends React.Component {
     }
 
     btnClick = async () => {
-        console.log("Btn Clicked")
+        console.log("Btn Clicked");
         await axios.post("http://localhost:3001/signin", {
             // id:this.state.userid,
             id: this.state.id,
@@ -30,14 +39,16 @@ export default class extends React.Component {
             .then((response) => 
             {
                 console.log(response.status);
-                 if (response.status === 200) {//login fail
+                 if (response.status === 200) {
                     if(response.data){
-                      window.location.assign("/");
-                      window.sessionStorage.setItem("islogin",true);
-                      window.sessionStorage.setItem("user",response.data);
+                        login();
+                        console.log(this.state.isLogined);
+                        // window.location.assign("/");
+                    //   isLogined = true;
                     }
                  }else{
                     window.alert("다시해라");//login success
+                    // isLogined = false;
                     }
             })
             .catch((error) => {
@@ -47,7 +58,9 @@ export default class extends React.Component {
     }
 
     render() {
+
         return (
+            <>
             <LoginPresenter
             id={this.id}
             password={this.password}
@@ -55,6 +68,25 @@ export default class extends React.Component {
             PasswordChange = {this.PasswordChange}
             btnClick = {this.btnClick}    
             />
+            <div onClick>={login}</div>
+            </>
         )
     }
 }
+
+
+const mapStateToProps = (state) => ({
+    isLogined : state.isLogined
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: () => dispatch(login()),
+        logout: () => dispatch(logout())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginContainer);

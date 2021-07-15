@@ -8,6 +8,9 @@ import Login from "../Routes/Login";
 import Sign from "../Routes/Sign";
 
 class Route1 extends Router{
+    state={
+        islogin:false
+    }
 
     render(){
         return(
