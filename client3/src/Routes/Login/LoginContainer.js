@@ -41,8 +41,6 @@ class LoginContainer extends React.Component {
                 console.log(response.status);
                  if (response.status === 200) {
                     if(response.data){
-                        login();
-                        console.log(this.state.isLogined);
                         // window.location.assign("/");
                     //   isLogined = true;
                     }
@@ -68,7 +66,7 @@ class LoginContainer extends React.Component {
             PasswordChange = {this.PasswordChange}
             btnClick = {this.btnClick}    
             />
-            <div onClick>={login}</div>
+            {/* <div onClick>={this.login}</div> */}
             </>
         )
     }
