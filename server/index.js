@@ -138,16 +138,26 @@ app.post('/signin', (req, res) => {
             res.sendStatus(204);
             throw error;
         }
-        console.log(result.length);
         if(result.length===0){
             res.sendStatus(204);
         }else {
+
             req.session.user_id = result[0].user_id;
             req.session.save(function(){
+                console.log(req.session.user_id);
                 res.send(req.session.user_id);
             })
         }
     })
+});
+
+app.get('/logout', (req, res) => {
+    console.log("post logout");
+    delete req.session.user_id;
+    req.session.save(()=>{
+        res.redirect("/");
+    });
+
 });
 
 app.listen(PORT, () => {

@@ -5,84 +5,13 @@ import axios from "axios";
 
 export default class extends React.Component {
     state = {
-        data: null,
-        userid: "",
-        usertitle: "",
-        usercontent: "",
-        logined:""
+        isLogined:false
     }
 
-    IdChange = (e) => {
-        this.setState({
-            // [e.target.name]:e.target.value
-            userid: e.target.value
-        });
-    }
-
-    TitleChange = (e) => {
-        this.setState({
-            // [e.target.name]:e.target.value
-            usertitle: e.target.value
-        });
-    }
-
-    ContentChange = (e) => {
-        this.setState({
-            // [e.target.name]:e.target.value
-            usercontent: e.target.value
-        });
-    }
-
-    btnClick = async () => {
-        console.log(`${this.state.userid}\n${this.state.usertitle}\n${this.state.usercontent}`);
-        if (isNaN(parseInt(this.state.userid))) {
-            console.log("id issue\n");
-        }
-        else {
-            await axios.post("http://localhost:3001/data", {
-                // id:this.state.userid,
-                id: parseInt(this.state.userid),
-                title: this.state.usertitle,
-                content: this.state.usercontent,
-            })
-                .then((response) => {
-                    if (response.status === 200) {
-                        // console.log(response);
-                        console.log(response.data);
-                        // console.log(response.status);
-                    } else {
-                        console.log("no");
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-    }
-
-    btnDelete = async () => {
-        console.log(`${this.state.userid}\n`);
-        if (isNaN(parseInt(this.state.userid))) {
-            console.log("id issue\n");
-        }
-        else {
-            await axios.post("http://localhost:3001/data", {
-                // id:this.state.userid,
-                id: parseInt(this.state.userid)
-            })
-                .then((response) => {
-                    if (response.status === 200) {
-                        // console.log(response);
-                        console.log(response.data);
-                        // console.log(response.status);
-                    } else {
-                        console.log("no");
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
+    logout = async()=>{
+        window.alert("로그아웃되었습니다.");
+        axios.get("http://localhost:3001/logout",{withCredentials: true});
+        window.location.replace("/");
     }
 
     async componentDidMount() {
@@ -94,23 +23,24 @@ export default class extends React.Component {
         // } catch {
         //     this.setState({ data: null })
         // }
-        console.log(window.sessionStorage);
+        await axios.get("http://localhost:3001/",{withCredentials: true})
+        .then((response)=>{
+            console.log(response);
+            if(response.data.length>0){
+                this.setState({isLogined:true});
+            }else if(response.data.length===0){
+                this.setState({isLogined:false})
+            }   
+        })
     }
 
     render() {
-        const { data } = this.state;
+        const {isLogined, logout} = this.state;
         console.log(this.state);
         return (
             <HomePresenter
-                data={data}
-                userid={this.userid}
-                usertitle={this.usertitle}
-                usercontent={this.usercontent}
-                IdChange={this.IdChange}
-                TitleChange={this.TitleChange}
-                ContentChange={this.ContentChange}
-                btnClick={this.btnClick}
-                btnDelete={this.btnDelete} />
+                isLogined = {this.state.isLogined}
+                logout = {this.logout} />
         )
     }
 }

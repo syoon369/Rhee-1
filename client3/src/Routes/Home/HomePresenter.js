@@ -219,20 +219,26 @@ const PickCont = styled.p`
     text-align: center;
 `;
 
+const GoLogin = styled(Link)`
+
+`;
+
+const GoLogout = styled.button`
+
+`;
+
 const HomePresenter = ({
-    data,
-    userid,
-    usertitle,
-    usercontent,
-    btnClick,
-    btnDelete,
-    IdChange,
-    TitleChange,
-    ContentChange
+    isLogined,
+    logout
 }) => (
     <>
-
         <MainBox>
+            {console.log(isLogined)}
+            {isLogined ? 
+            (<GoLogout onClick={logout}>logout</GoLogout>
+            ):(
+            <GoLogin to="/login" >login</GoLogin> 
+            )}
             <VideoBox>
                 <VideoDiv>
                     <VideoImg src={menu1} />
@@ -337,25 +343,13 @@ const HomePresenter = ({
                     </PickList>
                 </PickListBox>
             </PickBox>
-            <input onChange={IdChange} type="text" name="userid" />
-            <input onChange={TitleChange} type="text" name="usertitle" />
-            <input onChange={ContentChange} type="text" name="usercontent" />
-            <button onClick={btnClick}>submit</button>
-            <button onClick={btnDelete}>delete</button>
         </MainBox>
     </>
 );
 
 HomePresenter.propTypes = {
-    data: PropTypes.array,
-    userid: PropTypes.string,
-    usertitle: PropTypes.string,
-    usercontent: PropTypes.string,
-    IdChange: PropTypes.func.isRequired,
-    TitleChange: PropTypes.func.isRequired,
-    ContentChange: PropTypes.func.isRequired,
-    btnClick: PropTypes.func.isRequired,
-    btnDelete: PropTypes.func.isRequired
+    isLogined:PropTypes.bool,
+    logout:PropTypes.func.isRequired
 }
 
 export default HomePresenter;

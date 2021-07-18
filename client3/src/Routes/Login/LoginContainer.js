@@ -41,7 +41,7 @@ class LoginContainer extends React.Component {
                 console.log(response.status);
                  if (response.status === 200) {
                     if(response.data){
-                        // window.location.assign("/");
+                        window.location.assign("/");
                     //   isLogined = true;
                     }
                  }else{
