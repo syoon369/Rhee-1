@@ -10,8 +10,7 @@ import {login, logout} from '../../Redux/redux';
 
 //     return isLogined;
 // }
-class LoginContainer extends React.Component {
-
+export default class LoginContainer extends React.Component {
     state = {
         id: "",
         password: "",
@@ -41,8 +40,10 @@ class LoginContainer extends React.Component {
                 console.log(response.status);
                  if (response.status === 200) {
                     if(response.data){
+                        //this.setState({isLogined : true});
+                        window.alert(response.data+"님, 환영합니다")
                         window.location.assign("/");
-                    //   isLogined = true;
+                        
                     }
                  }else{
                     window.alert("다시해라");//login success
@@ -55,10 +56,15 @@ class LoginContainer extends React.Component {
         // window.location.reload();
     }
 
-    render() {
-
+    render() {s
         return (
             <>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             <LoginPresenter
             id={this.id}
             password={this.password}
@@ -73,18 +79,18 @@ class LoginContainer extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({
-    isLogined : state.isLogined
-});
+// const mapStateToProps = (state) => ({
+//     isLogined : state.isLogined
+// });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: () => dispatch(login()),
-        logout: () => dispatch(logout())
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         login: () => dispatch(login()),
+//         logout: () => dispatch(logout())
+//     }
+// }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginContainer);
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(LoginContainer);
