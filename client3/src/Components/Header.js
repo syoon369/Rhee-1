@@ -66,19 +66,19 @@ export default withRouter(({ location: { pathname } }) => (
             </SLink>
         </Span>
         <List>
-            <Item current={pathname === "/community"}>
+            <Item current={pathname === "/community"} key="1">
                 <SLink to="/community">community</SLink>
             </Item>
-            <Item current={pathname === "/editorial"}>
+            <Item current={pathname === "/editorial"} key="2">
                 <SLink to="/editorial">editorial</SLink>
             </Item>
-            <Item current={pathname === "/about"}>
+            <Item current={pathname === "/about"} key="3">
                 <SLink to="/about">about</SLink>
             </Item>
-            <Item current={pathname === "/store"}>
+            <Item current={pathname === "/store"} key="4">
                 <SLink to="/store">store</SLink>
             </Item>
-            <Item current={pathname === "/board"}>
+            <Item current={pathname === "/board"} key="5">
                 <SLink to="/board">board</SLink>
             </Item>
         </List>

@@ -61,20 +61,22 @@ const BoardPresenter = ({
                         <table>
                             <thead>
                                 <tr>
-                                    <td>작성자</td>
-                                    <td>제목</td>
-                                    <td>내용</td>
+                                    <td key='1'>작성자</td>
+                                    <td key='2'>제목</td>
+                                    <td key='3'>내용</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map(list => (
+                                <tr>                                                                                       
+                                {data.map((content, index) => (
                                     <>
-                                        <tr class={"data_nickname"}>{list.nickname}</tr>
-                                        <tr class={"data_title"}>{list.title}</tr>
-                                        <tr class={"data_content"}>{list.content}</tr>
-                                        <button onClick={btnDelete}>삭제</button>
+                                        <td key={index*4} className={"data_nickname"} >{content.nickname}//</td>
+                                        <td key={index*4+1} className={"data_title"}>{content.title}//</td>
+                                        <td key={index*4+2} className={"data_content"}>{content.content}//</td>
+                                        <td key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제|</button></td>
                                     </>
                                 ))}
+                                </tr>
                             </tbody>
                         </table>
                     </div>

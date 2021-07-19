@@ -56,7 +56,7 @@ export default class LoginContainer extends React.Component {
         // window.location.reload();
     }
 
-    render() {s
+    render() {
         return (
             <>
             <br/>

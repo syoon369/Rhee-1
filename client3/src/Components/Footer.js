@@ -75,16 +75,16 @@ export default withRouter(({ location: { pathname } }) => (
             <Box>
                 <Name>Company</Name>
                 <List>
-                    <Item current={pathname === "/about"}>
+                    <Item current={pathname === "/about"} key="1">
                         <SLink to="/about">about</SLink>
                     </Item>
-                    <Item current={pathname === "/team"}>
+                    <Item current={pathname === "/team"} key="2">
                         <SLink to="/team">team</SLink>
                     </Item>
-                    <Item current={pathname === "/careers"}>
+                    <Item current={pathname === "/careers"} key="3">
                         <SLink to="/careers">careers</SLink>
                     </Item>
-                    <Item current={pathname === "/privacy_policy"}>
+                    <Item current={pathname === "/privacy_policy"} key="4">
                         <SLink to="/privacy_policy">privacy policy</SLink>
                     </Item>
                 </List>
@@ -92,16 +92,16 @@ export default withRouter(({ location: { pathname } }) => (
             <Box>
                 <Name>Locations</Name>
                 <List>
-                    <Item current={pathname === "/seoul"}>
+                    <Item current={pathname === "/seoul"} key="1">
                         <SLink to="/seoul">seoul</SLink>
                     </Item>
-                    <Item current={pathname === "/tokyo"}>
+                    <Item current={pathname === "/tokyo"} key="2">
                         <SLink to="/tokyo">tokyo</SLink>
                     </Item>
-                    <Item current={pathname === "/beijing"}>
+                    <Item current={pathname === "/beijing"} key="3">
                         <SLink to="/beijing">beijing</SLink>
                     </Item>
-                    <Item current={pathname === "/newyork"}>
+                    <Item current={pathname === "/newyork"} key="4">
                         <SLink to="/newyork">newyork</SLink>
                     </Item>
                 </List>
@@ -109,16 +109,16 @@ export default withRouter(({ location: { pathname } }) => (
             <Box>
                 <Name>Social media</Name>
                 <List>
-                    <Item current={pathname === "/facebook"}>
+                    <Item current={pathname === "/facebook"} key="5">
                         <SLink to="/facebook">facebook</SLink>
                     </Item>
-                    <Item current={pathname === "/twitter"}>
+                    <Item current={pathname === "/twitter"} key="6">
                         <SLink to="/twitter">twitter</SLink>
                     </Item>
-                    <Item current={pathname === "/instagram"}>
+                    <Item current={pathname === "/instagram"} key="7">
                         <SLink to="/instagram">instagram</SLink>
                     </Item>
-                    <Item current={pathname === "/youtube"}>
+                    <Item current={pathname === "/youtube"} key="8">
                         <SLink to="/youtube">youtube</SLink>
                     </Item>
                 </List>
