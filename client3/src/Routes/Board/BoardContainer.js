@@ -28,7 +28,8 @@ export default class extends React.Component {
     }
 
     btnClick = async () => {
-        await axios.post("http://localhost:3001/data/board", {
+        if(this.state.isLogined ===true){
+            await axios.post("http://localhost:3001/data/board", {
             title: this.state.title,
             content: this.state.content
         },{withCredentials:true})
@@ -43,10 +44,19 @@ export default class extends React.Component {
                 console.log(error);
             });
         window.location.reload();
+        }else{
+            window.alert("로그인을 해주세요");
+        }
     }
 
-    btnDelete = async () => {
-        await axios.post("http://localhost:3001/data/board/delete",{withCredentials:true}, {
+    btnDelete = async (e) => {
+        console.log("삭제 버튼 클릭됨");
+        const value = e.target.value;
+        console.log(String(value));
+        if(this.state.isLogined===true){
+            await axios.post("http://localhost:3001/data/board/delete",{
+            board_id: value
+         },{withCredentials:true}, {
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -56,11 +66,15 @@ export default class extends React.Component {
                 } else {
                     console.log("no");
                 }
+                window.location.reload();
             })
             .catch((error) => {
                 console.log(error);
             });
-        window.location.reload();
+ 
+        }else{
+            window.alert("로그인을 해주세요");
+        }
     }
 
     async componentDidMount() {

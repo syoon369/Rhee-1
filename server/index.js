@@ -112,13 +112,19 @@ app.post('/data/board', (req, res) => {
 });
 
 app.post('/data/board/delete', (req, res) => {
+    const d = {
+        board_id:req.body.board_id
+    }
     console.log("Delete Data");
-    db.query(`DELETE FROM board WHERE board_id = ?`, [req.params.id], function (error, result) {
+    console.log(req.session.user_id, d.board_id);
+    db.query(`DELETE FROM board WHERE writer = ? and board_id = ?`, [req.session.user_id, d.board_id], function (error, result) {
         if (error) {
             throw error;
         }
+    
         // res.writeHead(302, {Location:`/data/${res.insertId}`});
-        res.end;
+        res.sendStatus(200);
+        console.log(result);
     });
 });``
 
