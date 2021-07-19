@@ -5,86 +5,62 @@ import axios from "axios";
 
 export default class extends React.Component {
     state = {
-        data: null,
-        userid: "",
-        usertitle: "",
-        usercontent: "",
-        loading: true
-    }
-
-    IdChange = (e) => {
-        this.setState({
-            // [e.target.name]:e.target.value
-            userid: e.target.value
-        });
+        data:null,
+        title: "",
+        content: "",
+        loading: true,
+        isLogined:false,
+        nickname:""
     }
 
     TitleChange = (e) => {
         this.setState({
             // [e.target.name]:e.target.value
-            usertitle: e.target.value
+            title: e.target.value
         });
     }
 
     ContentChange = (e) => {
         this.setState({
             // [e.target.name]:e.target.value
-            usercontent: e.target.value
+            content: e.target.value
         });
     }
 
     btnClick = async () => {
-        console.log(`${this.state.userid}\n${this.state.usertitle}\n${this.state.usercontent}`);
-        if (isNaN(parseInt(this.state.userid))) {
-            console.log("id issue\n");
-        }
-        else {
-            await axios.post("http://localhost:3001/data", {
-                // id:this.state.userid,
-                id: parseInt(this.state.userid),
-                title: this.state.usertitle,
-                content: this.state.usercontent,
+        await axios.post("http://localhost:3001/data/board", {
+            title: this.state.title,
+            content: this.state.content
+        },{withCredentials:true})
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("response.data : " + response.data);
+                } else {
+                    console.log("no");
+                }
             })
-                .then((response) => {
-                    if (response.status === 200) {
-                        // console.log(response);
-                        console.log("response.data : " + response.data);
-                        // console.log(response.status);
-                    } else {
-                        console.log("no");
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            window.location.reload();
-        }
+            .catch((error) => {
+                console.log(error);
+            });
+        window.location.reload();
     }
 
     btnDelete = async () => {
-        console.log(`${this.state.userid}\n`);
-        if (isNaN(parseInt(this.state.userid))) {
-            console.log("id issue\n");
-        }
-        else {
-            await axios.post("http://localhost:3001/data", {
-                // id:this.state.userid,
-                id: parseInt(this.state.userid)
+        await axios.post("http://localhost:3001/data/board/delete",{withCredentials:true}, {
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    // console.log(response);
+                    console.log(response.data);
+                    // console.log(response.status);
+                } else {
+                    console.log("no");
+                }
             })
-                .then((response) => {
-                    if (response.status === 200) {
-                        // console.log(response);
-                        console.log(response.data);
-                        // console.log(response.status);
-                    } else {
-                        console.log("no");
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            window.location.reload();
-        }
+            .catch((error) => {
+                console.log(error);
+            });
+        window.location.reload();
     }
 
     async componentDidMount() {
@@ -100,23 +76,29 @@ export default class extends React.Component {
                 loading: false
             })
         }
+        await axios.get("http://localhost:3001",{withCredentials: true})
+        .then((response)=>{
+            if(response.data){
+                this.setState({isLogined:true, nickname:response.data});
+            }
+        })
     }
 
     render() {
-        const { data, userid, usertitle, usercontent, IdChange, TitleChange, ContentChange, btnClick, btnDelete, loading } = this.state;
+        const {data, title, content, TitleChange, ContentChange, btnClick, btnDelete, loading, isLogined, nickname } = this.state;
         console.log(this.state);
         return (
             <BoardPresenter
                 data={data}
-                userid={this.userid}
-                usertitle={this.usertitle}
-                usercontent={this.usercontent}
-                IdChange={this.IdChange}
+                title={this.title}
+                content={this.content}
                 TitleChange={this.TitleChange}
                 ContentChange={this.ContentChange}
                 btnClick={this.btnClick}
                 btnDelete={this.btnDelete}
-                loading={loading} />
+                loading={loading}
+                isLogined={isLogined}
+                nickname={nickname} />
         )
     }
 }

@@ -229,15 +229,35 @@ const GoLogout = styled.button`
 
 const HomePresenter = ({
     isLogined,
-    logout
+    logout,
+    nickname
 }) => (
     <>
         <MainBox>
             {console.log(isLogined)}
             {isLogined ? 
-            (<GoLogout onClick={logout}>logout</GoLogout>
+            (
+            <>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div>{nickname}님, 환영합니다!!</div>
+            <GoLogout onClick={logout}>logout
+            </GoLogout>
+            </>
             ):(
+            <>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             <GoLogin to="/login" >login</GoLogin> 
+            </>
             )}
             <VideoBox>
                 <VideoDiv>
@@ -349,7 +369,8 @@ const HomePresenter = ({
 
 HomePresenter.propTypes = {
     isLogined:PropTypes.bool,
-    logout:PropTypes.func.isRequired
+    logout:PropTypes.func.isRequired,
+    nickname:PropTypes.string
 }
 
 export default HomePresenter;

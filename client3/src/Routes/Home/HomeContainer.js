@@ -5,7 +5,8 @@ import axios from "axios";
 
 export default class extends React.Component {
     state = {
-        isLogined:false
+        isLogined:false,
+        nickname:""
     }
 
     logout = async()=>{
@@ -15,32 +16,21 @@ export default class extends React.Component {
     }
 
     async componentDidMount() {
-        // try {
-        //     const { data: data } = await userApi.load();
-        //     this.setState({
-        //         data
-        //     });
-        // } catch {
-        //     this.setState({ data: null })
-        // }
         await axios.get("http://localhost:3001/",{withCredentials: true})
         .then((response)=>{
-            console.log(response);
-            if(response.data.length>0){
-                this.setState({isLogined:true});
-            }else if(response.data.length===0){
-                this.setState({isLogined:false})
-            }   
+            if(response.data){
+                this.setState({isLogined:true, nickname:response.data});
+            }
         })
     }
 
     render() {
-        const {isLogined, logout} = this.state;
         console.log(this.state);
         return (
             <HomePresenter
                 isLogined = {this.state.isLogined}
-                logout = {this.logout} />
+                logout = {this.logout}
+                nickname={this.state.nickname}/>
         )
     }
 }

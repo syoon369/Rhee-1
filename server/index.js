@@ -1,3 +1,4 @@
+
 var express = require('express');
 var app = express();
 const cors = require('cors');
@@ -28,19 +29,14 @@ app.use(session({
     }
   }))
 
-app.get('/hello', (req, res) => {
-    res.send({ hello: 'asdf' });
-    console.log("Get hello")
-});
-
 app.get('/', (req, res) => {
     console.log("Get /");
     req.session.where = "Get /";
     req.session.save(function(){
         console.log(req.session);
-        if(req.session.user_id != null){
-            console.log(req.session.user_id);
-            res.send(req.session.user_id);
+        if(req.session.nickname != null){
+            console.log(req.session.nickname);
+            res.send(req.session.nickname);
         }else {
             res.sendStatus(204);
         }
@@ -48,54 +44,74 @@ app.get('/', (req, res) => {
     //res.send("/");
 });
 
-
 app.get('/data', (req, res) => {
     console.log("Get Data");
     req.session.where = "Get data";
     req.session.save(function(){
         console.log(req.session);
-        db.query(`SELECT * FROM board`, function (error, topics) {
+        db.query(`SELECT board_id,title,content,nickname FROM board b , user u WHERE b.writer=u.user_id`, function (error, result) {
             if (error) {
                 throw error;
             }
-            res.send(topics);
+            res.send(result);
             //console.log(topics);
         });
      });
 });
-app.get('/data/:id', (req, res) => {
-    console.log("Get Data:id");
-    db.query(`SELECT * FROM board WHERE board_id=?`, [req.params.id], function (error, topic) {
-        if (error) {
-            throw error;
-        }
-        res.send(topic);
-        res.end();
-    });
-});
+
+// app.get('/data/:id', (req, res) => {
+//     console.log("Get Data:id");
+//     db.query(`SELECT * FROM board WHERE board_id=?`, [req.params.id], function (error, topic) {
+//         if (error) {
+//             throw error;
+//         }
+//         res.send(topic);
+//         res.end();
+//     });
+// });
 
 app.post('/', (req, res) => {
     console.log("Post /");
     res.send(req.body);
 });
 
-app.post('/data', (req, res) => {
-    console.log("Post Data");
+// app.post('/data', (req, res) => {
+//     console.log("Post Data");
+//     const d = {
+//         id: req.body.id,
+//         writer: req.body.writer,
+//         title: req.body.title,
+//         content: req.body.content
+//     }
+//     db.query(`INSERT INTO board(board_id, writer, title, content) VALUES (?,?,?,?)`, [d.id, d.writer, d.title, d.content], function (error, result) {
+//         if (error) {
+//             throw error;
+//         }
+//     })
+//     res.send(d);
+// });
+
+app.post('/data/board', (req, res) => {
+    console.log("Post Board");
     const d = {
-        id: req.body.id,
-        writer: req.body.writer,
         title: req.body.title,
         content: req.body.content
     }
-    db.query(`INSERT INTO board(board_id, writer, title, content) VALUES (?,?,?,?)`, [d.id, d.writer, d.title, d.content], function (error, result) {
-        if (error) {
-            throw error;
-        }
-    })
-    res.send(d);
+    console.log(d);
+    console.log(req.session);
+    if(req.session.user_id != null) {
+        console.log("db insert");
+        db.query(`INSERT INTO board(writer, title, content) VALUES (?,?,?)`, [req.session.user_id, d.title, d.content], function (error, result) {
+            if (error) {
+                throw error;
+            }
+            res.sendStatus(200);
+            return;
+        })
+    }
 });
 
-app.delete('/data/delete/:id', (req, res) => {
+app.post('/data/board/delete', (req, res) => {
     console.log("Delete Data");
     db.query(`DELETE FROM board WHERE board_id = ?`, [req.params.id], function (error, result) {
         if (error) {
@@ -141,11 +157,12 @@ app.post('/signin', (req, res) => {
         if(result.length===0){
             res.sendStatus(204);
         }else {
-
             req.session.user_id = result[0].user_id;
+            req.session.nickname = result[0].nickname;
+            req.session.where = "signin";
             req.session.save(function(){
-                console.log(req.session.user_id);
-                res.send(req.session.user_id);
+                console.log(req.session.nickname);
+                res.send(req.session.nickname);
             })
         }
     })
@@ -153,7 +170,9 @@ app.post('/signin', (req, res) => {
 
 app.get('/logout', (req, res) => {
     console.log("post logout");
+    delete req.session.nickname;
     delete req.session.user_id;
+    delete req.session.where;
     req.session.save(()=>{
         res.redirect("/");
     });

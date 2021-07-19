@@ -32,31 +32,36 @@ const BoardTable = styled.table`
 
 const BoardPresenter = ({
     data,
-    userid,
-    usertitle,
-    usercontent,
-    btnWrite,
+    title,
+    content,
     btnClick,
     btnDelete,
-    IdChange,
     TitleChange,
     ContentChange,
-    loading
+    loading,
+    isLogined,
+    nickname
 }) => (
     <>
         {loading ? (<div>loading...</div>) : (
             <MainBox>
                 <BoardBox>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                     <div>
-                        <input onChange={IdChange} type="text" name="userid" />
                         <input onChange={TitleChange} type="text" name="usertitle" />
                         <input onChange={ContentChange} type="text" name="usercontent" />
                         <button onClick={btnClick}>submit</button>
-                        <button onClick={btnDelete}>delete</button>
                         <table>
                             <thead>
                                 <tr>
-                                    <td>아이디</td>
+                                    <td>작성자</td>
                                     <td>제목</td>
                                     <td>내용</td>
                                 </tr>
@@ -64,9 +69,10 @@ const BoardPresenter = ({
                             <tbody>
                                 {data.map(list => (
                                     <>
-                                        <tr class={"data_id"} key={list.id}>{list.id}</tr>
+                                        <tr class={"data_nickname"}>{list.nickname}</tr>
                                         <tr class={"data_title"}>{list.title}</tr>
                                         <tr class={"data_content"}>{list.content}</tr>
+                                        <button onClick={btnDelete}>삭제</button>
                                     </>
                                 ))}
                             </tbody>
@@ -80,15 +86,14 @@ const BoardPresenter = ({
 
 BoardPresenter.propTypes = {
     data: PropTypes.array,
-    userid: PropTypes.string,
-    usertitle: PropTypes.string,
-    usercontent: PropTypes.string,
-    IdChange: PropTypes.func.isRequired,
+    title: PropTypes.string,
+    content: PropTypes.string,
     TitleChange: PropTypes.func.isRequired,
     ContentChange: PropTypes.func.isRequired,
-    btnWrite: PropTypes.func.isRequired,
     btnClick: PropTypes.func.isRequired,
-    btnDelete: PropTypes.func.isRequired
+    btnDelete: PropTypes.func.isRequired,
+    isLogined:PropTypes.bool,
+    nickname:PropTypes.string
 }
 
 export default BoardPresenter;
