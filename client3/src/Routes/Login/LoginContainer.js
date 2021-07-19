@@ -2,21 +2,21 @@ import axios from "axios";
 import React from "react";
 import LoginPresenter from "./LoginPresenter";
 import { connect } from 'react-redux';
-import {login, logout} from '../../Redux/redux';
+import {actionCreators} from '../../store';
+import {logIn, logOut} from '../../store';
 
-// var isLogined = false;
-
-// exports.setIsLogin = () =>{
-
-//     return isLogined;
-// }
 class LoginContainer extends React.Component {
-
-    state = {
-        id: "",
-        password: "",
-        isLogined: false
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+          isLogined: false
+        }
+      }
+    // state = {
+    //     id: "",
+    //     password: "",
+        
+    // }
     IdChange = (e)=>{
         this.setState({
             id:e.target.value
@@ -40,10 +40,12 @@ class LoginContainer extends React.Component {
             {
                 console.log(response.status);
                  if (response.status === 200) {
-                    if(response.data){
-                        window.location.assign("/");
+                    // if(response.data){
+                        logIn(this.state.isLogined);
+                        console.log(this.state.isLogined);
+                        //window.location.assign("/");
                     //   isLogined = true;
-                    }
+                    // }
                  }else{
                     window.alert("다시해라");//login success
                     // isLogined = false;
@@ -74,13 +76,13 @@ class LoginContainer extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    isLogined : state.isLogined
+    isLogined:state.isLogined
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: () => dispatch(login()),
-        logout: () => dispatch(logout())
+        logIn: () => dispatch(logIn()),
+        logOut: () => dispatch(logOut())
     }
 }
 
