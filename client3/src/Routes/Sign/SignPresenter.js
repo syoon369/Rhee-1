@@ -3,6 +3,10 @@ import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+const InputBox = styled.div`
+    text-align: center;
+`;
+
 const SignPresenter = ({
     id,
     password,
@@ -27,11 +31,17 @@ const SignPresenter = ({
     <br/>
     <br/>
     <input onChange = {IdChange} type = 'text'></input>
+    <br/>
     <input onChange = {PasswordChange} type = 'password'></input>
+    <br/>
     <input onChange ={FnChange} type='text'></input>
+    <br/>
     <input onChange ={LnChange} type='text'></input>
+    <br/>
     <input onChange ={NicknameChange} type='text'></input>
+    <br/>
     <input onChange = {BirthChange} type = "date"/>
+    <br/>
     <input onChange = {SexChange} type='radio' name='sex' value='male' checked='checked'/>
     <input onChange = {SexChange} type='radio' name='sex' value='female'/>
     <button onClick = {btnClick}>Sign</button>

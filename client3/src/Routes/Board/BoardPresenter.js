@@ -23,11 +23,22 @@ const BoardBox = styled.div`
     align-items: center;
     justify-content: center;
 `;
+const MyTd = styled.td`
+    display:block;
+    text-align:center;
+`;
 
-const BoardWriteBox = styled.div``;
+const MyTh = styled.tr`
+    display:flex;
+    text-align:center;
+    margin:0 auto;
+`;
+const BoardWriteBox = styled.div`
+
+`;
 
 const BoardTable = styled.table`
-    
+    display:block;
 `;
 
 const BoardPresenter = ({
@@ -55,30 +66,30 @@ const BoardPresenter = ({
                 <br/>
                 <br/>
                     <div>
-                        <input onChange={TitleChange} type="text" name="usertitle" />
+                        {/* <input onChange={TitleChange} type="text" name="usertitle" />
                         <input onChange={ContentChange} type="text" name="usercontent" />
-                        <button onClick={btnClick}>submit</button>
-                        <table>
+                        <button onClick={btnClick}>submit</button> */}
+                        <BoardTable>
                             <thead>
-                                <tr>
-                                    <td key='1'>작성자</td>
-                                    <td key='2'>제목</td>
-                                    <td key='3'>내용</td>
-                                </tr>
+                                <MyTh>
+                                    <td key='1'><button onClick={btnClick}>글 작성하기</button></td>
+                                </MyTh>
                             </thead>
                             <tbody>
+                                <br/>
                                 <tr>                                                                                       
                                 {data.map((content, index) => (
                                     <>
-                                        <td key={index*4} className={"data_nickname"} >{content.nickname}//</td>
-                                        <td key={index*4+1} className={"data_title"}>{content.title}//</td>
-                                        <td key={index*4+2} className={"data_content"}>{content.content}//</td>
-                                        <td key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제|</button></td>
+                                        <MyTd key={index*4} className={"data_nickname"} >작성자<br/>{content.nickname}</MyTd>
+                                        <MyTd key={index*4+1} className={"data_title"}>제목<br/>{content.title}</MyTd>
+                                        <MyTd key={index*4+2} className={"data_content"}>내용<br/>{content.content}</MyTd>
+                                        <MyTd key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제</button></MyTd>
+                                        <br/><br/>
                                     </>
                                 ))}
                                 </tr>
                             </tbody>
-                        </table>
+                        </BoardTable>
                     </div>
                 </BoardBox>
             </MainBox>

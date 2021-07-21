@@ -8,6 +8,14 @@ const GoSign = styled(Link)`
     width:100px;
 `;
 
+const InputBox = styled.div`
+    text-align: center;
+`;
+
+const SytledInput = styled.input`
+    margin: 0px 50px;
+`;
+
 const LoginPresenter = ({
     id,
     password,
@@ -21,10 +29,19 @@ const LoginPresenter = ({
     <br/>
     <br/>
     <br/>
-    <input onChange = {IdChange}></input>
-    <input onChange = {PasswordChange} type = 'password'></input>
-    <button onClick = {btnClick}>login</button>
-    <GoSign to ="/sign">회원가입</GoSign>
+    <InputBox>
+        <p>ID</p>
+        <SytledInput onChange = {IdChange}></SytledInput>
+        <p>PW</p>
+        <SytledInput onChange = {PasswordChange} type = 'password'></SytledInput>
+        <br/>
+        <br/>
+        <br/>
+        <button onClick = {btnClick}>login</button>
+        <br/>
+        <br/>
+        <GoSign to ="/sign">회원가입</GoSign>
+    </InputBox>
     </>
 );
 

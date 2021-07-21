@@ -29,21 +29,7 @@ export default class extends React.Component {
 
     btnClick = async () => {
         if(this.state.isLogined ===true){
-            await axios.post("http://localhost:3001/data/board", {
-            title: this.state.title,
-            content: this.state.content
-        },{withCredentials:true})
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log("response.data : " + response.data);
-                } else {
-                    console.log("no");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        window.location.reload();
+           window.location.assign("/writing");
         }else{
             window.alert("로그인을 해주세요");
         }

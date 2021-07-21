@@ -49,7 +49,7 @@ app.get('/data', (req, res) => {
     req.session.where = "Get data";
     req.session.save(function(){
         console.log(req.session);
-        db.query(`SELECT board_id,title,content,nickname FROM board b , user u WHERE b.writer=u.user_id`, function (error, result) {
+        db.query(`SELECT board_id,title,content,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date ASC`, function (error, result) {
             if (error) {
                 throw error;
             }
