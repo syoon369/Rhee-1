@@ -22,7 +22,6 @@ export default class DetailContainer extends React.Component {
             }
         })
 
-
         await axios.get(`http://localhost:3001/detail/${this.props.match.params.id}`,{withCredentials: true})
         .then((response)=>{
             this.setState({
@@ -36,12 +35,25 @@ export default class DetailContainer extends React.Component {
         })
     }
 
-    btnUpdate = async () => {
-        // if(this.state.isLogined ===true){
-        //    window.location.assign("/writing");
-        // }else{
-        //     window.alert("로그인을 해주세요");
-        // }
+    btnUpdate = async (e) => {
+        if(this.state.isLogined ===true){
+        await axios.post("http://localhost:3001/data/board/assign",{
+                board_id: this.state.board_id
+            },{withCredentials:true},{
+
+            }).then((response) => {
+                if(response.status === 200){
+                   window.location.assign(`/update/${this.state.board_id}`); 
+                }else{
+                   window.alert("수정 하지 말라");
+                }
+            }).catch((error) =>{
+                
+            })
+            
+        }else{
+            window.alert("수정 권한이 없습니다.");
+        }
     }
 
     btnDelete = async (e) => {
@@ -59,7 +71,7 @@ export default class DetailContainer extends React.Component {
                     // console.log(response.status);
                 } else {
                     console.log("no");
-                    window.alert("삭제 권한이 없습니다.");
+                    window.alert("삭제 하지 말라");
                 }
             
             })
@@ -68,7 +80,7 @@ export default class DetailContainer extends React.Component {
             });
  
         }else{
-            window.alert("삭제 권한이 없습니다.");
+            window.alert("삭제 하지 말라");
         }
     }
 
@@ -84,7 +96,8 @@ export default class DetailContainer extends React.Component {
             content={content}
             loading={loading}
             isLogined={isLogined}
-            btnDelete = {this.btnDelete} />
+            btnDelete = {this.btnDelete}
+            btnUpdate = {this.btnUpdate} />
             </>
         );
     }

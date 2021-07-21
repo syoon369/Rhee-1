@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const DetailPresenter=({title, date,nickname,board_id,content,loading, btnDelete, isLogined})=>(
+const DetailPresenter=({title, date,nickname,board_id,content,loading, btnDelete, btnUpdate, isLogined})=>(
     <>
     {console.log(loading)}
     {loading ? ( 
@@ -18,7 +18,7 @@ const DetailPresenter=({title, date,nickname,board_id,content,loading, btnDelete
         {date}<br/>
         {title}<br/>
         {content}<br/>
-        <button>수정</button>
+        <button onClick={btnUpdate}>수정</button>
         <button onClick={btnDelete}>삭제</button>
         </div>
     )} 
@@ -33,6 +33,7 @@ DetailPresenter.propTypes={
     content:PropTypes.string,
     loading:PropTypes.bool,
     btnDelete:PropTypes.func.isRequired,
+    btnUpdate:PropTypes.func.isRequired,
     isLogined:PropTypes.bool
 }
 

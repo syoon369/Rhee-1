@@ -71,7 +71,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const {data, title, date, btnClick, btnDelete, loading, isLogined, nickname } = this.state;
+        const {data, title, date, loading, isLogined, nickname } = this.state;
         console.log(this.state);
         return (
             <BoardPresenter

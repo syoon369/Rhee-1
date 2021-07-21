@@ -70,6 +70,23 @@ app.get('/detail/:id', (req, res) => {
     });
 });
 
+app.post('/data/board/assign', (req, res) => {
+    const d = {
+        board_id: req.body.board_id
+    }
+    db.query(`SELECT * FROM board b, user u WHERE b.writer=u.user_id and board_id=? and writer=?`,
+    [d.board_id, req.session.user_id], function (error, result) {
+        if(error){
+            throw error;
+        }
+        if(result.length > 0){
+            res.sendStatus(200);
+        }else{
+            res.sendStatus(204);
+        }
+    })
+})
+
 app.post('/', (req, res) => {
     console.log("Post /");
     res.send(req.body);
@@ -102,6 +119,24 @@ app.post('/data/board', (req, res) => {
     if(req.session.user_id != null) {
         console.log("db insert");
         db.query(`INSERT INTO board(writer, title, content) VALUES (?,?,?)`, [req.session.user_id, d.title, d.content], function (error, result) {
+            if (error) {
+                throw error;
+            }
+            res.sendStatus(200);
+            return;
+        })
+    }
+});
+
+app.post('/data/board/update', (req, res) => {
+    console.log("Update Board");
+    const d = {
+        title: req.body.title,
+        content: req.body.content,
+        board_id: req.body.board_id
+    }
+    if(req.session.user_id != null) {
+        db.query(`UPDATE board SET title=?, content=? WHERE board_id=?`, [d.title, d.content, d.board_id], function (error, result) {
             if (error) {
                 throw error;
             }
@@ -188,6 +223,8 @@ app.get('/logout', (req, res) => {
     });
 
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);

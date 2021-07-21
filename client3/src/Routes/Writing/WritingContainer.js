@@ -3,7 +3,6 @@ import WritingPresenter from './WritingPresenter';
 import axios from "axios";
 
 export default class WritingContainer extends React.Component {
-
     state = {
         title: "",
         content: ""
