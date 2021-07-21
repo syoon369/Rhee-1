@@ -42,8 +42,6 @@ export default class WritingContainer extends React.Component {
     }
 
     render() {
-        const {title, content, TitleChange, ContentChange, btnClick } = this.state;
-        console.log(this.state);
         return (
             <WritingPresenter
                 title={this.title}

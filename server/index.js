@@ -49,7 +49,7 @@ app.get('/data', (req, res) => {
     req.session.where = "Get data";
     req.session.save(function(){
         console.log(req.session);
-        db.query(`SELECT board_id,title,content,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date ASC`, function (error, result) {
+        db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date ASC`, function (error, result) {
             if (error) {
                 throw error;
             }
@@ -59,16 +59,16 @@ app.get('/data', (req, res) => {
      });
 });
 
-// app.get('/data/:id', (req, res) => {
-//     console.log("Get Data:id");
-//     db.query(`SELECT * FROM board WHERE board_id=?`, [req.params.id], function (error, topic) {
-//         if (error) {
-//             throw error;
-//         }
-//         res.send(topic);
-//         res.end();
-//     });
-// });
+app.get('/detail/:id', (req, res) => {
+    console.log("Get Data:id");
+    db.query(`SELECT board_id, title, content, date, nickname FROM board b, user u WHERE board_id=? and b.writer=u.user_id`, [req.params.id], function (error, result) {
+        if (error) {
+            throw error;
+        }
+        res.send(result);
+        res.end();
+    });
+});
 
 app.post('/', (req, res) => {
     console.log("Post /");
@@ -121,11 +121,15 @@ app.post('/data/board/delete', (req, res) => {
         if (error) {
             throw error;
         }
-    
+        console.log(result.affectedRows);
+        if(result.affectedRows){
+            res.sendStatus(200);
+        }else{
+            res.sendStatus(204);
+        }
         // res.writeHead(302, {Location:`/data/${res.insertId}`});
-        res.sendStatus(200);
-        console.log(result);
-    });
+    })
+   
 });``
 
 app.post('/signup', (req, res) => {

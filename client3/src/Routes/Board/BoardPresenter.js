@@ -44,11 +44,9 @@ const BoardTable = styled.table`
 const BoardPresenter = ({
     data,
     title,
-    content,
+    date,
     btnClick,
     btnDelete,
-    TitleChange,
-    ContentChange,
     loading,
     isLogined,
     nickname
@@ -72,19 +70,17 @@ const BoardPresenter = ({
                         <BoardTable>
                             <thead>
                                 <MyTh>
-                                    <td key='1'><button onClick={btnClick}>글 작성하기</button></td>
+                                    <td key='100'><button onClick={btnClick}>글 작성하기</button></td>
                                 </MyTh>
                             </thead>
                             <tbody>
-                                <br/>
                                 <tr>                                                                                       
                                 {data.map((content, index) => (
                                     <>
-                                        <MyTd key={index*4} className={"data_nickname"} >작성자<br/>{content.nickname}</MyTd>
-                                        <MyTd key={index*4+1} className={"data_title"}>제목<br/>{content.title}</MyTd>
-                                        <MyTd key={index*4+2} className={"data_content"}>내용<br/>{content.content}</MyTd>
-                                        <MyTd key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제</button></MyTd>
-                                        <br/><br/>
+                                        <MyTd key={(index*3).toString()} className={"data_nickname"} >작성자{content.nickname}</MyTd>
+                                        <MyTd key={(index*3+1).toString()} className={"data_title"}><Link to={`/detail/${content.board_id}`}>제목{content.title}</Link></MyTd>
+                                        <MyTd key={(index*3+2).toString()} className={"data_date"}>일시{content.date}</MyTd>
+                                        {/* <MyTd key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제</button></MyTd> */}
                                     </>
                                 ))}
                                 </tr>
@@ -100,9 +96,7 @@ const BoardPresenter = ({
 BoardPresenter.propTypes = {
     data: PropTypes.array,
     title: PropTypes.string,
-    content: PropTypes.string,
-    TitleChange: PropTypes.func.isRequired,
-    ContentChange: PropTypes.func.isRequired,
+    date:PropTypes.string,
     btnClick: PropTypes.func.isRequired,
     btnDelete: PropTypes.func.isRequired,
     isLogined:PropTypes.bool,

@@ -7,6 +7,7 @@ import Board from "../Routes/Board";
 import Login from "../Routes/Login";
 import Sign from "../Routes/Sign";
 import Writing from "../Routes/Writing";
+import Detail from "../Routes/Detail";
 class Route1 extends Router{
     state={
         islogin:false
@@ -23,6 +24,7 @@ class Route1 extends Router{
                 <Route path="/login" component={Login}/>
                 <Route path="/sign" component={Sign}/>
                 <Route path="/writing" component={Writing}/>
+                <Route path="/detail/:id"  component={Detail}/>
                 {/* <Route path="/community" component={Community} />
                 <Route path="/editorial" component={Editorial} />
                 <Route path="/about" component={About} />

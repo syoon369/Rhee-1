@@ -7,24 +7,10 @@ export default class extends React.Component {
     state = {
         data:null,
         title: "",
-        content: "",
+        date: "",
         loading: true,
         isLogined:false,
         nickname:""
-    }
-
-    TitleChange = (e) => {
-        this.setState({
-            // [e.target.name]:e.target.value
-            title: e.target.value
-        });
-    }
-
-    ContentChange = (e) => {
-        this.setState({
-            // [e.target.name]:e.target.value
-            content: e.target.value
-        });
     }
 
     btnClick = async () => {
@@ -85,15 +71,13 @@ export default class extends React.Component {
     }
 
     render() {
-        const {data, title, content, TitleChange, ContentChange, btnClick, btnDelete, loading, isLogined, nickname } = this.state;
+        const {data, title, date, btnClick, btnDelete, loading, isLogined, nickname } = this.state;
         console.log(this.state);
         return (
             <BoardPresenter
                 data={data}
-                title={this.title}
-                content={this.content}
-                TitleChange={this.TitleChange}
-                ContentChange={this.ContentChange}
+                title={title}
+                date={date}
                 btnClick={this.btnClick}
                 btnDelete={this.btnDelete}
                 loading={loading}
