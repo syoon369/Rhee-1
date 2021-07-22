@@ -72,7 +72,7 @@ const BoardPresenter = ({
                     <input type="text" onChange={termChange} />
                     <select onChange={menuChange} name="menu">
                         <option value="hashtag">해시태그</option>
-                        <option value="content">내용</option>
+                        <option value="content">제목+내용</option>
                         <option value="writer">작성자</option>
                     </select>
                     <button onClick={btnSearch}>글 검색하기</button>

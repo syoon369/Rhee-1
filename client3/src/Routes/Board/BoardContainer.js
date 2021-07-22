@@ -47,6 +47,7 @@ export default class extends React.Component {
                 this.contentSearch();
                 break;
             case "writer":
+                this.writerSearch();
                 break;
             default:
                 break;
@@ -67,6 +68,21 @@ export default class extends React.Component {
 
     contentSearch = async()=>{
         await axios.post('http://localhost:3001/search/content',{
+            searchTerm : this.state.searchTerm
+        },{withCredentials:true})
+        .then((response) => {
+            console.log(response.data);
+            this.setState({
+                data:response.data
+            })
+        })
+        .catch((error) => {
+
+        })
+    }
+
+    writerSearch = async()=>{
+        await axios.post('http://localhost:3001/search/writer',{
             searchTerm : this.state.searchTerm
         },{withCredentials:true})
         .then((response) => {

@@ -244,7 +244,24 @@ app.post('/search/content', (req, res) => {
     }
     var content = "%" + d.searchTerm +"%"
 
-    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE content LIKE ? and b.writer = u.user_id ORDER BY date DESC`,[content], function (error, result) {
+    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE (content LIKE ? or title LIKE ?) and b.writer = u.user_id ORDER BY date DESC`,[content, content], function (error, result) {
+        if (error) {
+            throw error;
+        }
+        console.log(result);
+        res.send(result);
+        //console.log(topics);
+    });
+});
+
+app.post('/search/writer', (req, res) => {
+    console.log("Post writer");
+    const d = {
+        searchTerm: req.body.searchTerm
+    }
+    var content = "%" + d.searchTerm +"%"
+
+    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE nickname LIKE ? and b.writer = u.user_id ORDER BY date DESC`,[content], function (error, result) {
         if (error) {
             throw error;
         }
