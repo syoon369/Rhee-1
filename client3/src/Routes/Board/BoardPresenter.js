@@ -25,6 +25,7 @@ const BoardBox = styled.div`
 `;
 const MyTd = styled.td`
     display:block;
+    height:20px;
     text-align:center;
 `;
 
@@ -34,11 +35,12 @@ const MyTh = styled.tr`
     margin:0 auto;
 `;
 const BoardWriteBox = styled.div`
-
+    
 `;
 
 const BoardTable = styled.table`
     display:block;
+    margin-top:20px;
 `;
 
 const BoardPresenter = ({
@@ -73,22 +75,24 @@ const BoardPresenter = ({
                         <option value="content">내용</option>
                         <option value="writer">작성자</option>
                     </select>
-                    <button onClick={btnSearch}>search</button>
+                    <button onClick={btnSearch}>글 검색하기</button>
+                    <br/>
+                    <button onClick={btnClick}>글 작성하기</button>
                     <div>
                         <BoardTable>
                             <thead>
                                 <MyTh>
-                                    <td><button onClick={btnClick}>글 작성하기</button></td>
+                                    <td></td>
                                 </MyTh>
                             </thead>
                             <tbody>
                                 <tr>
                                     {data.map((content, index) => (
                                         <>
-                                            <MyTd key={index * 3 + 1} className={"data_nickname"}>{index * 3 + 1}작성자{content.nickname}</MyTd>
-                                            <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/detail/${content.board_id}`}>{index * 3 + 2} 제목{content.title}</Link></MyTd>
-                                            <MyTd key={index * 3 + 3} className={"data_date"}>{index * 3 + 3} 일시{content.date}</MyTd>
-                                            {/* <MyTd key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제</button></MyTd> */}
+                                            <MyTd key={index * 3 + 1} className={"data_nickname"}>작성자 {content.nickname}</MyTd>
+                                            <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/detail/${content.board_id}`}>제목 {content.title}</Link></MyTd>
+                                            <MyTd key={index * 3 + 3} className={"data_date"}>일시 {content.date}</MyTd>
+                                            <MyTd/>
                                         </>
                                     ))}
                                 </tr>

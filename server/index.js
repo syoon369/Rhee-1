@@ -228,37 +228,30 @@ app.post('/search/hash', (req, res) => {
     const d = {
         searchTerm: req.body.searchTerm
     }
-    db.query(`SELECT board_id,title,content,date FROM board b, hashtag h WHERE b.board_id=h.board_id and tag=?`,
+    db.query(`SELECT board_id,title,date, nickname FROM board b, hashtag h WHERE b.board_id=h.board_id and tag=? ORDER BY date DESC`,
     [d.searchTerm], function(error, result) {
         if(error){
             throw error;
         }
-        if(result.length > 0){
-            res.send(result);
-        }else{
-            res.sendStatus(204);
-        }
+        res.send(result);
     });
 });
 
 app.post('/search/content', (req, res) => {
+    console.log("Post content");
     const d = {
         searchTerm: req.body.searchTerm
     }
+    var content = "%" + d.searchTerm +"%"
 
-    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE content ORDER BY date DESC`, function (error, result) {
+    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE content LIKE ? and b.writer = u.user_id ORDER BY date DESC`,[content], function (error, result) {
         if (error) {
             throw error;
         }
+        console.log(result);
         res.send(result);
         //console.log(topics);
     });
-    // db.query(`SELECT board_id,title,content,date FROM board b, hashtag h WHERE b.board_id=h.board_id and tag=?`,
-    // [d.searchTerm], function(error, result) {
-    //     if(error){
-    //         throw error;
-    //     }
-    // });
 });
 
 app.listen(PORT, () => {

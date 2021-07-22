@@ -234,31 +234,6 @@ const HomePresenter = ({
 }) => (
     <>
         <MainBox>
-            {console.log(isLogined)}
-            {isLogined ? 
-            (
-            <>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <div>{nickname}님, 환영합니다!!</div>
-            <GoLogout onClick={logout}>logout
-            </GoLogout>
-            </>
-            ):(
-            <>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <GoLogin to="/login" >login</GoLogin> 
-            </>
-            )}
             <VideoBox>
                 <VideoDiv>
                     <VideoImg src={menu1} />
@@ -269,6 +244,19 @@ const HomePresenter = ({
                     <RightLink>→</RightLink>
                 </VideoDiv>
             </VideoBox>
+            {isLogined ? 
+            (
+            <>
+            <br/>
+            <div>{nickname}님, 환영합니다!!</div>
+            <GoLogout onClick={logout}>logout
+            </GoLogout>
+            </>
+            ):(
+            <>
+            <GoLogin to="/login" >login</GoLogin> 
+            </>
+            )}
             <JournalBox>
                 <JournalUL>
                     <JournalLI>

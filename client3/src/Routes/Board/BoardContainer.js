@@ -40,9 +40,11 @@ export default class extends React.Component {
     btnSearch =(e)=>{
         switch(this.state.searchMenu){
             case "hashtag":
-                this.hashsearch();
+                this.hashSearch();
                 break;
             case "content":
+                console.log("content");
+                this.contentSearch();
                 break;
             case "writer":
                 break;
@@ -51,12 +53,12 @@ export default class extends React.Component {
         }
     }
 
-    hashsearch = async()=>{
-        await axios.post("http//localhost:3001/search/hash",{
+    hashSearch = async()=>{
+        await axios.post('http://localhost:3001/search/hash',{
             searchTerm : this.state.searchTerm
         },{withCredentials:true})
         .then((response) => {
-
+            
         })
         .catch((error) => {
 
@@ -64,11 +66,14 @@ export default class extends React.Component {
     }
 
     contentSearch = async()=>{
-        await axios.post("http//localhost:3001/search/content",{
+        await axios.post('http://localhost:3001/search/content',{
             searchTerm : this.state.searchTerm
         },{withCredentials:true})
         .then((response) => {
-
+            console.log(response.data);
+            this.setState({
+                data:response.data
+            })
         })
         .catch((error) => {
 
@@ -76,24 +81,42 @@ export default class extends React.Component {
     }
 
     async componentDidMount() {
-        try {
-            const { data: data } = await userApi.load();
-            this.setState({
-                data
-            });
-        } catch {
-            this.setState({ data: "nothing" })
-        } finally {
-            this.setState({
-                loading: false
-            })
-        }
+        // try {
+        //     const { data: data } = await userApi.load();
+        //     this.setState({
+        //         data
+        //     });
+        // } catch {
+        //     this.setState({ data: "nothing" })
+        // } finally {
+        //     this.setState({
+        //         loading: false
+        //     })
+        // }
+        
+        await axios.get('http://localhost:3001/data',{withCredentials: true})
+        .then((response)=>{
+            if(response.data){
+                console.log(response.data);
+                this.setState({
+                    data:response.data,
+                    loading: false
+                })
+            }else{
+                return -1;
+            }
+        });  
+
+
         await axios.get("http://localhost:3001",{withCredentials: true})
         .then((response)=>{
             if(response.data){
                 this.setState({isLogined:true, nickname:response.data});
             }
-        })
+        });
+
+        
+        
     }
 
     render() {
