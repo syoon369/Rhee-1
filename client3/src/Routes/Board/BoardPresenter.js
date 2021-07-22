@@ -46,43 +46,51 @@ const BoardPresenter = ({
     title,
     date,
     btnClick,
-    btnDelete,
+    termChange,
+    menuChange,
+    btnSearch,
     loading,
     isLogined,
-    nickname
+    nickname,
+    searchTerm,
+    searchMenu
 }) => (
     <>
         {loading ? (<div>loading...</div>) : (
             <MainBox>
                 <BoardBox>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <input type="text" onChange={termChange} />
+                    <select onChange={menuChange} name="menu">
+                        <option value="hashtag">해시태그</option>
+                        <option value="content">내용</option>
+                        <option value="writer">작성자</option>
+                    </select>
+                    <button onClick={btnSearch}>search</button>
                     <div>
-                        {/* <input onChange={TitleChange} type="text" name="usertitle" />
-                        <input onChange={ContentChange} type="text" name="usercontent" />
-                        <button onClick={btnClick}>submit</button> */}
                         <BoardTable>
                             <thead>
                                 <MyTh>
-                                    <td key='100'><button onClick={btnClick}>글 작성하기</button></td>
+                                    <td><button onClick={btnClick}>글 작성하기</button></td>
                                 </MyTh>
                             </thead>
                             <tbody>
-                                <tr>                                                                                       
-                                {data.map((content, index) => (
-                                    <>
-                                        <MyTd key={(index*3).toString()} className={"data_nickname"} >작성자{content.nickname}</MyTd>
-                                        <MyTd key={(index*3+1).toString()} className={"data_title"}><Link to={`/detail/${content.board_id}`}>제목{content.title}</Link></MyTd>
-                                        <MyTd key={(index*3+2).toString()} className={"data_date"}>일시{content.date}</MyTd>
-                                        {/* <MyTd key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제</button></MyTd> */}
-                                    </>
-                                ))}
+                                <tr>
+                                    {data.map((content, index) => (
+                                        <>
+                                            <MyTd key={index * 3 + 1} className={"data_nickname"}>{index * 3 + 1}작성자{content.nickname}</MyTd>
+                                            <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/detail/${content.board_id}`}>{index * 3 + 2} 제목{content.title}</Link></MyTd>
+                                            <MyTd key={index * 3 + 3} className={"data_date"}>{index * 3 + 3} 일시{content.date}</MyTd>
+                                            {/* <MyTd key={index*4+3}><button onClick={btnDelete} value={content.board_id}>삭제</button></MyTd> */}
+                                        </>
+                                    ))}
                                 </tr>
                             </tbody>
                         </BoardTable>
@@ -96,11 +104,15 @@ const BoardPresenter = ({
 BoardPresenter.propTypes = {
     data: PropTypes.array,
     title: PropTypes.string,
-    date:PropTypes.string,
+    date: PropTypes.string,
     btnClick: PropTypes.func.isRequired,
-    btnDelete: PropTypes.func.isRequired,
-    isLogined:PropTypes.bool,
-    nickname:PropTypes.string
+    termChange: PropTypes.func.isRequired,
+    menuChange: PropTypes.func.isRequired,
+    btnSearch: PropTypes.func.isRequired,
+    isLogined: PropTypes.bool,
+    nickname: PropTypes.string,
+    searchTerm: PropTypes.string,
+    searchMenu: PropTypes.string
 }
 
 export default BoardPresenter;

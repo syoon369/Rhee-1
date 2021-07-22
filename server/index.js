@@ -49,7 +49,7 @@ app.get('/data', (req, res) => {
     req.session.where = "Get data";
     req.session.save(function(){
         console.log(req.session);
-        db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date ASC`, function (error, result) {
+        db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date DESC`, function (error, result) {
             if (error) {
                 throw error;
             }
@@ -224,7 +224,42 @@ app.get('/logout', (req, res) => {
 
 });
 
+app.post('/search/hash', (req, res) => {
+    const d = {
+        searchTerm: req.body.searchTerm
+    }
+    db.query(`SELECT board_id,title,content,date FROM board b, hashtag h WHERE b.board_id=h.board_id and tag=?`,
+    [d.searchTerm], function(error, result) {
+        if(error){
+            throw error;
+        }
+        if(result.length > 0){
+            res.send(result);
+        }else{
+            res.sendStatus(204);
+        }
+    });
+});
 
+app.post('/search/content', (req, res) => {
+    const d = {
+        searchTerm: req.body.searchTerm
+    }
+
+    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE content ORDER BY date DESC`, function (error, result) {
+        if (error) {
+            throw error;
+        }
+        res.send(result);
+        //console.log(topics);
+    });
+    // db.query(`SELECT board_id,title,content,date FROM board b, hashtag h WHERE b.board_id=h.board_id and tag=?`,
+    // [d.searchTerm], function(error, result) {
+    //     if(error){
+    //         throw error;
+    //     }
+    // });
+});
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);

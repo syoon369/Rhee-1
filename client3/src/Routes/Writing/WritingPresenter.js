@@ -18,7 +18,7 @@ const WritingPresenter=({
     <br/>
     <br/>
     <input onChange={TitleChange} type="text" name="usertitle" />
-    <input Change={ContentChange} type="text" name="usercontent" />
+    <input onChange={ContentChange} type="text" name="usercontent" />
     <button onClick={btnClick}>submit</button>
     Write
     </>

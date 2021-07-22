@@ -10,7 +10,9 @@ export default class extends React.Component {
         date: "",
         loading: true,
         isLogined:false,
-        nickname:""
+        nickname:"",
+        searchTerm:"",
+        searchMenu:"hashtag"
     }
 
     btnClick = async () => {
@@ -21,32 +23,56 @@ export default class extends React.Component {
         }
     }
 
-    btnDelete = async (e) => {
-        console.log("삭제 버튼 클릭됨");
-        const value = e.target.value;
-        console.log(String(value));
-        if(this.state.isLogined===true){
-            await axios.post("http://localhost:3001/data/board/delete",{
-            board_id: value
-         },{withCredentials:true}, {
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    // console.log(response);
-                    console.log(response.data);
-                    // console.log(response.status);
-                } else {
-                    console.log("no");
-                }
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
- 
-        }else{
-            window.alert("로그인을 해주세요");
+    termChange = (e) => {
+        this.setState({
+            // [e.target.name]:e.target.value
+            searchTerm: e.target.value
+        });
+    }
+
+    menuChange = (e)=> {
+        this.setState({
+            searchMenu:e.target.value
+        });
+        console.log(this.state.searchMenu);
+    }
+
+    btnSearch =(e)=>{
+        switch(this.state.searchMenu){
+            case "hashtag":
+                this.hashsearch();
+                break;
+            case "content":
+                break;
+            case "writer":
+                break;
+            default:
+                break;
         }
+    }
+
+    hashsearch = async()=>{
+        await axios.post("http//localhost:3001/search/hash",{
+            searchTerm : this.state.searchTerm
+        },{withCredentials:true})
+        .then((response) => {
+
+        })
+        .catch((error) => {
+
+        })
+    }
+
+    contentSearch = async()=>{
+        await axios.post("http//localhost:3001/search/content",{
+            searchTerm : this.state.searchTerm
+        },{withCredentials:true})
+        .then((response) => {
+
+        })
+        .catch((error) => {
+
+        })
     }
 
     async componentDidMount() {
@@ -71,7 +97,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const {data, title, date, loading, isLogined, nickname } = this.state;
+        const {data, title, date, loading, isLogined, nickname, searchTerm, searchMenu } = this.state;
         console.log(this.state);
         return (
             <BoardPresenter
@@ -79,10 +105,14 @@ export default class extends React.Component {
                 title={title}
                 date={date}
                 btnClick={this.btnClick}
-                btnDelete={this.btnDelete}
+                termChange={this.termChange}
+                menuChange={this.menuChange}
+                btnSearch={this.btnSearch}
                 loading={loading}
                 isLogined={isLogined}
-                nickname={nickname} />
+                nickname={nickname}
+                searchTerm={searchTerm}
+                searchMenu={searchMenu} />
         )
     }
 }
