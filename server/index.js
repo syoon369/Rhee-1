@@ -1,9 +1,8 @@
-
 var express = require('express');
 var app = express();
 const cors = require('cors');
 var session = require('express-session')
-var MySQLStore= require('express-mysql-session')(session)
+var MySQLStore = require('express-mysql-session')(session)
 //const body = require('body-parser');
 const PORT = process.env.PORT || 3001;
 const db = require('./config/db');
@@ -11,44 +10,44 @@ const db = require('./config/db');
 
 app.use(express.json());
 app.use(express.urlencoded({ extend: true }));
-app.use(cors({credentials: true,origin:true}));
+app.use(cors({ credentials: true, origin: true }));
 app.set('trust proxy', true);
 app.use(session({
     secret: 'rhee123',
     resave: false,
     saveUninitialized: true,
-    store:new MySQLStore({
-        host:'localhost',
-        port:3306,
-        user:'root',
-        password:'1234',
-        database:'rhee'
+    store: new MySQLStore({
+        host: 'localhost',
+        port: 3306,
+        user: 'root',
+        password: '1234',
+        database: 'rhee'
     }),
-    cookie: {	
+    cookie: {
         secure: false
     }
-  }))
+}))
 
 app.get('/', (req, res) => {
     console.log("Get /");
     req.session.where = "Get /";
-    req.session.save(function(){
-        console.log(req.session);
-        if(req.session.nickname != null){
-            console.log(req.session.nickname);
+    req.session.save(function () {
+        // console.log(req.session);
+        if (req.session.nickname != null) {
+            console.log('nickname:' + req.session.nickname);
             res.send(req.session.nickname);
-        }else {
+        } else {
             res.sendStatus(204);
         }
-     });
+    });
     //res.send("/");
 });
 
 app.get('/data', (req, res) => {
     console.log("Get Data");
     req.session.where = "Get data";
-    req.session.save(function(){
-        console.log(req.session);
+    req.session.save(function () {
+        // console.log(req.session);
         db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date DESC`, function (error, result) {
             if (error) {
                 throw error;
@@ -56,7 +55,7 @@ app.get('/data', (req, res) => {
             res.send(result);
             //console.log(topics);
         });
-     });
+    });
 });
 
 app.get('/detail/:id', (req, res) => {
@@ -75,38 +74,22 @@ app.post('/data/board/assign', (req, res) => {
         board_id: req.body.board_id
     }
     db.query(`SELECT * FROM board b, user u WHERE b.writer=u.user_id and board_id=? and writer=?`,
-    [d.board_id, req.session.user_id], function (error, result) {
-        if(error){
-            throw error;
-        }
-        if(result.length > 0){
-            res.sendStatus(200);
-        }else{
-            res.sendStatus(204);
-        }
-    })
+        [d.board_id, req.session.user_id], function (error, result) {
+            if (error) {
+                throw error;
+            }
+            if (result.length > 0) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(204);
+            }
+        })
 })
 
 app.post('/', (req, res) => {
     console.log("Post /");
     res.send(req.body);
 });
-
-// app.post('/data', (req, res) => {
-//     console.log("Post Data");
-//     const d = {
-//         id: req.body.id,
-//         writer: req.body.writer,
-//         title: req.body.title,
-//         content: req.body.content
-//     }
-//     db.query(`INSERT INTO board(board_id, writer, title, content) VALUES (?,?,?,?)`, [d.id, d.writer, d.title, d.content], function (error, result) {
-//         if (error) {
-//             throw error;
-//         }
-//     })
-//     res.send(d);
-// });
 
 app.post('/data/board', (req, res) => {
     console.log("Post Board");
@@ -116,7 +99,7 @@ app.post('/data/board', (req, res) => {
     }
     console.log(d);
     console.log(req.session);
-    if(req.session.user_id != null) {
+    if (req.session.user_id != null) {
         console.log("db insert");
         db.query(`INSERT INTO board(writer, title, content) VALUES (?,?,?)`, [req.session.user_id, d.title, d.content], function (error, result) {
             if (error) {
@@ -135,7 +118,7 @@ app.post('/data/board/update', (req, res) => {
         content: req.body.content,
         board_id: req.body.board_id
     }
-    if(req.session.user_id != null) {
+    if (req.session.user_id != null) {
         db.query(`UPDATE board SET title=?, content=? WHERE board_id=?`, [d.title, d.content, d.board_id], function (error, result) {
             if (error) {
                 throw error;
@@ -148,7 +131,7 @@ app.post('/data/board/update', (req, res) => {
 
 app.post('/data/board/delete', (req, res) => {
     const d = {
-        board_id:req.body.board_id
+        board_id: req.body.board_id
     }
     console.log("Delete Data");
     console.log(req.session.user_id, d.board_id);
@@ -157,15 +140,15 @@ app.post('/data/board/delete', (req, res) => {
             throw error;
         }
         console.log(result.affectedRows);
-        if(result.affectedRows){
+        if (result.affectedRows) {
             res.sendStatus(200);
-        }else{
+        } else {
             res.sendStatus(204);
         }
         // res.writeHead(302, {Location:`/data/${res.insertId}`});
     })
-   
-});``
+
+}); ``
 
 app.post('/signup', (req, res) => {
     console.log("Post SignUp");
@@ -199,13 +182,13 @@ app.post('/signin', (req, res) => {
             res.sendStatus(204);
             throw error;
         }
-        if(result.length===0){
+        if (result.length === 0) {
             res.sendStatus(204);
-        }else {
+        } else {
             req.session.user_id = result[0].user_id;
             req.session.nickname = result[0].nickname;
             req.session.where = "signin";
-            req.session.save(function(){
+            req.session.save(function () {
                 console.log(req.session.nickname);
                 res.send(req.session.nickname);
             })
@@ -218,10 +201,9 @@ app.get('/logout', (req, res) => {
     delete req.session.nickname;
     delete req.session.user_id;
     delete req.session.where;
-    req.session.save(()=>{
+    req.session.save(() => {
         res.redirect("/");
     });
-
 });
 
 app.post('/search/hash', (req, res) => {
@@ -229,12 +211,12 @@ app.post('/search/hash', (req, res) => {
         searchTerm: req.body.searchTerm
     }
     db.query(`SELECT board_id,title,date, nickname FROM board b, hashtag h WHERE b.board_id=h.board_id and tag=? ORDER BY date DESC`,
-    [d.searchTerm], function(error, result) {
-        if(error){
-            throw error;
-        }
-        res.send(result);
-    });
+        [d.searchTerm], function (error, result) {
+            if (error) {
+                throw error;
+            }
+            res.send(result);
+        });
 });
 
 app.post('/search/content', (req, res) => {
@@ -242,9 +224,9 @@ app.post('/search/content', (req, res) => {
     const d = {
         searchTerm: req.body.searchTerm
     }
-    var content = "%" + d.searchTerm +"%"
+    var content = "%" + d.searchTerm + "%"
 
-    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE (content LIKE ? or title LIKE ?) and b.writer = u.user_id ORDER BY date DESC`,[content, content], function (error, result) {
+    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE (content LIKE ? or title LIKE ?) and b.writer = u.user_id ORDER BY date DESC`, [content, content], function (error, result) {
         if (error) {
             throw error;
         }
@@ -259,9 +241,9 @@ app.post('/search/writer', (req, res) => {
     const d = {
         searchTerm: req.body.searchTerm
     }
-    var content = "%" + d.searchTerm +"%"
+    var content = "%" + d.searchTerm + "%"
 
-    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE nickname LIKE ? and b.writer = u.user_id ORDER BY date DESC`,[content], function (error, result) {
+    db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE nickname LIKE ? and b.writer = u.user_id ORDER BY date DESC`, [content], function (error, result) {
         if (error) {
             throw error;
         }
@@ -270,6 +252,65 @@ app.post('/search/writer', (req, res) => {
         //console.log(topics);
     });
 });
+
+app.post('/data/reply/add', (req, res) => {
+    console.log("Add Reply");
+    const d = {
+        board_id: req.body.board_id,
+        reply: req.body.reply,
+        parent_id: req.body.parent_id
+    }
+    console.log(d);
+    db.query(`INSERT INTO comment(board, writer, content, parent_id) VALUES (?,?,?,?)`, [d.board_id, req.session.user_id, d.reply, d.parent_id], function (error, result) {
+        if (error) {
+            throw error;
+        }
+        // console.log(result);
+        
+        res.send(result);
+        //console.log(topics);
+    });
+});
+
+app.post('/data/reply/delete', (req, res) => {
+    const d = {
+        comment_id: req.body.comment_id
+    }
+    console.log(d);
+    db.query(`DELETE FROM comment WHERE comment_id=? and writer=?`,[d.comment_id, req.session.user_id], function(error,result){
+        if(error){
+            throw error;
+        }
+        console.log(result);
+        if(result.affectedRows){
+            res.sendStatus(200);
+        }else{
+            res.sendStatus(204);
+        }
+    })
+})
+
+app.get('/data/reply/:id', (req, res) => {
+    console.log("Get Reply");
+    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY comment_id`,[req.params.id], function(error,result){
+        if(error){
+            throw error;
+        }
+        var arr = JSON.parse(JSON.stringify(result));
+        arr.forEach(element => {
+            if(element.parent_id===null){
+                
+            }
+        });
+        res.send(result);
+    })
+})
+
+app.post('/data/reply/reply', (req, res) => {
+    const d = {
+        parent_id: req.body.parent_id
+    };
+})
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);

@@ -123,16 +123,12 @@ export default class extends React.Component {
             }
         });  
 
-
         await axios.get("http://localhost:3001",{withCredentials: true})
         .then((response)=>{
             if(response.data){
                 this.setState({isLogined:true, nickname:response.data});
             }
         });
-
-        
-        
     }
 
     render() {
