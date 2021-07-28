@@ -23,6 +23,7 @@ const BoardBox = styled.div`
     align-items: center;
     justify-content: center;
 `;
+
 const MyTd = styled.td`
     display:block;
     height:20px;

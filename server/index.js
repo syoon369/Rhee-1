@@ -315,20 +315,31 @@ app.get('/data/reply/:id', (req, res) => {
 })
 
 app.get('/data/reply/reply/:id', (req, res) => {
-    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY parent_id`,[req.params.id], function(error,result){
+    console.log("Get reply/reply")
+    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? and c.parent_id IS NULL ORDER BY comment_id`,[req.params.id], function(error,result){
         if(error){
             throw error;
         }
-        var arr = JSON.parse(JSON.stringify(result));
-        var newarr = new Array();
+        var arrComment= JSON.parse(JSON.stringify(result));
 
-        arr.forEach(element => {
-            if(element.parent_id===null){
-                console.log("");
+        db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? and c.parent_id IS NOT NULL ORDER BY comment_id`,[req.params.id], function(error,result2){
+            if(error){
+                throw error;
             }
-        });
-        res.send(result);
-        console.log(result);
+            var arrReply = JSON.parse(JSON.stringify(result2))
+
+            var arrResult = new Array();
+    
+            arrComment.forEach(comment => {
+                arrResult.push(comment);
+                arrReply.forEach(reply =>{
+                    if(comment.comment_id === reply.parent_id){
+                        arrResult.push(reply);
+                    }
+                });
+            });
+            res.send(arrResult);
+        })
     })
 })
 

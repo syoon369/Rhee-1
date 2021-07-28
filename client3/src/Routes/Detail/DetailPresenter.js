@@ -6,6 +6,24 @@ const ReReplyBox = styled.div`
     display:${props=>props.current ? "block":"none"};
 `;
 
+const ReplyInput = styled.input`
+    display:${props=>props.current ? "block":"none"};
+`;
+
+const ReplyWriter = styled.div`
+`;
+
+const ReplyContent = styled.div`
+`;
+
+const ReplyButton = styled.button`
+    display:${props=>props.current ? "block":"none"};
+`;
+
+const RereplyDiv = styled.div`
+    display:${props=>props.current ? "block":"none"};
+`;
+
 const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply, loading, btnDelete, btnUpdate, btnReplyAdd, submitRereply, showRereply, reReplyChange, replyParent, btnReplyDelete, ReplyChange, isLogined})=>(
     <>
     {console.log(loading)}
@@ -27,7 +45,7 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
         <br/>
         <input onChange={ReplyChange} type="text"/>
         <button onClick={btnReplyAdd}>댓글</button>
-        
+        <br/><br/>
         <div>
             {/* {nowreply.map((rep, index)=>(
                 <>
@@ -68,6 +86,30 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
                 )}
                 </>
             ))} */}
+            {nowreply.map((reply)=>(
+                <>
+                {(reply.parent_id==null) ? (
+                    <>
+                    <div>작성자 {reply.nickname}</div>
+                    <div>내용 {reply.content}
+                    <button value={reply.comment_id} onClick={showRereply}>답글 보기</button></div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<div>
+                    <ReplyInput onChange={reReplyChange} current={reply.comment_id==replyParent} type="text"/>
+                    <ReplyButton onClick={submitRereply} current={reply.comment_id==replyParent}>작성</ReplyButton>
+                    </div>
+                    <br/>
+                    </>
+                ):(
+                    <>
+                    <RereplyDiv current={reply.parent_id==replyParent}>
+                    <ReplyWriter>&nbsp;&nbsp;&nbsp;&nbsp;작성자 {reply.nickname}</ReplyWriter>
+                    <ReplyContent>&nbsp;&nbsp;&nbsp;&nbsp;내용 {reply.content}</ReplyContent>
+                    <br/>
+                    </RereplyDiv>
+                    </>
+                )}
+                </>
+            ))}
             {console.log(nowreply)}
         </div>
         </div>

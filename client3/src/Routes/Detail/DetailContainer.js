@@ -11,10 +11,10 @@ export default class DetailContainer extends React.Component {
         content: "",
         nowreply: [],
         reply: "",
-        reReply:"",
+        reReply: "",
         loading: true,
         isLogined: false,
-        replyParent:""
+        replyParent: ""
     }
 
     async componentDidMount() {
@@ -37,13 +37,14 @@ export default class DetailContainer extends React.Component {
                 })
             })
 
-        await axios.get(`http://localhost:3001/data/reply/${this.state.board_id}`, { withCredentials: true })
-        .then((response) => {
-            console.log(response.data);
-            this.setState({
-                nowreply:response.data
+        await axios.get(`http://localhost:3001/data/reply/reply/${this.state.board_id}`, { withCredentials: true })
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    nowreply: response.data
+                })
             })
-        })
+
     }
 
     ReplyChange = (e) => {
@@ -121,8 +122,8 @@ export default class DetailContainer extends React.Component {
                 parent_id: this.state.parent_id
             }, { withCredentials: true })
                 .then((response) => {
-                console.log(response);
-                window.location.reload();
+                    console.log(response);
+                    window.location.reload();
                 }).catch((error) => {
                     console.log("오류");
                 })
@@ -159,16 +160,15 @@ export default class DetailContainer extends React.Component {
         }
     }
 
-    showRereply=(e)=>{
-        if (this.state.isLogined === true){
-            if(e.target.value !== this.state.replyParent){
-               this.setState({
-                    replyParent:e.target.value
-                },()=>console.log(this.state.replyParent));
-            }else{
+    showRereply = (e) => {
+            if (e.target.value !== this.state.replyParent) {
                 this.setState({
-                    replyParent:""
-                },()=>console.log(this.state.replyParent));
+                    replyParent: e.target.value
+                }, () => console.log(this.state.replyParent));
+            } else {
+                this.setState({
+                    replyParent: ""
+                }, () => console.log(this.state.replyParent));
             }
             // await axios.post("http://localhost:3001/data/reply/reply", {
             //     parent_id: e.target.value
@@ -189,27 +189,29 @@ export default class DetailContainer extends React.Component {
             //     }).catch((error) => {
             //         console.log("오류");
             //     })
+    }
+
+    submitRereply = async (e) => {
+        if (this.state.isLogined === true) {
+            await axios.post("http://localhost:3001/data/reply/add", {
+                board_id: this.state.board_id,
+                reply: this.state.reReply,
+                parent_id: this.state.replyParent
+            }, { withCredentials: true })
+                .then((response) => {
+                    console.log(response);
+                    window.location.reload();
+                }).catch((error) => {
+                    console.log("오류");
+                })
         } else {
             window.alert("로그인을 해주세요.");
         }
-    }
 
-    submitRereply=async(e)=>{
-        await axios.post("http://localhost:3001/data/reply/add", {
-            board_id: this.state.board_id,
-            reply: this.state.reReply,
-            parent_id: this.state.replyParent
-        }, { withCredentials: true })
-            .then((response) => {
-            console.log(response);
-            window.location.reload();
-            }).catch((error) => {
-                console.log("오류");
-        })
     }
 
     render() {
-        const { title, date, nickname, board_id, content, nowreply, loading, reply,reReply, isLogined, replyParent } = this.state;
+        const { title, date, nickname, board_id, content, nowreply, loading, reply, reReply, isLogined, replyParent } = this.state;
         return (
             <>
                 <DetailPresenter
@@ -228,7 +230,7 @@ export default class DetailContainer extends React.Component {
                     btnDelete={this.btnDelete}
                     btnUpdate={this.btnUpdate}
                     btnReplyAdd={this.btnReplyAdd}
-                    submitRereply = {this.submitRereply}
+                    submitRereply={this.submitRereply}
                     reReplyChange={this.reReplyChange}
                     btnReplyDelete={this.btnReplyDelete}
                     ReplyChange={this.ReplyChange} />
