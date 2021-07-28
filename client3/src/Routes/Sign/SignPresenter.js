@@ -30,19 +30,19 @@ const SignPresenter = ({
     <br/>
     <br/>
     <br/>
-    <input onChange = {IdChange} type = 'text'></input>
+    아이디<input onChange = {IdChange} type = 'text'></input>
     <br/>
-    <input onChange = {PasswordChange} type = 'password'></input>
+    비밀번호<input onChange = {PasswordChange} type = 'password'></input>
     <br/>
-    <input onChange ={FnChange} type='text'></input>
+    성<input onChange ={FnChange} type='text'></input>
     <br/>
-    <input onChange ={LnChange} type='text'></input>
+    이름<input onChange ={LnChange} type='text'></input>
     <br/>
-    <input onChange ={NicknameChange} type='text'></input>
+    닉네임<input onChange ={NicknameChange} type='text'></input>
     <br/>
-    <input onChange = {BirthChange} type = "date"/>
+    생년월일<input onChange = {BirthChange} type = "date"/>
     <br/>
-    <input onChange = {SexChange} type='radio' name='sex' value='male' checked='checked'/>
+    성별<input onChange = {SexChange} type='radio' name='sex' value='male' checked='checked'/>
     <input onChange = {SexChange} type='radio' name='sex' value='female'/>
     <button onClick = {btnClick}>Sign</button>
     </>

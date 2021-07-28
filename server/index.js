@@ -292,24 +292,44 @@ app.post('/data/reply/delete', (req, res) => {
 
 app.get('/data/reply/:id', (req, res) => {
     console.log("Get Reply");
-    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY comment_id`,[req.params.id], function(error,result){
+    var final_result = {
+        count : [],
+        result : []
+    };
+    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY parent_id`,[req.params.id], function(error,result){
+        if(error){
+            throw error;
+        }
+        final_result.result.push(result);
+        console.log(final_result);
+        db.query(`SELECT parent_id, count(comment_id) from comment group by parent_id order by parent_id`, function(error,result2){
+            if(error){
+                throw error;
+            }
+            console.log("된다")
+            final_result.count.push(result2);
+            console.log(final_result);
+            res.send(final_result);
+        })
+    })
+})
+
+app.get('/data/reply/reply/:id', (req, res) => {
+    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY parent_id`,[req.params.id], function(error,result){
         if(error){
             throw error;
         }
         var arr = JSON.parse(JSON.stringify(result));
+        var newarr = new Array();
+
         arr.forEach(element => {
             if(element.parent_id===null){
-                
+                console.log("");
             }
         });
         res.send(result);
+        console.log(result);
     })
-})
-
-app.post('/data/reply/reply', (req, res) => {
-    const d = {
-        parent_id: req.body.parent_id
-    };
 })
 
 app.listen(PORT, () => {

@@ -118,7 +118,7 @@ export default class DetailContainer extends React.Component {
             await axios.post("http://localhost:3001/data/reply/add", {
                 board_id: this.state.board_id,
                 reply: this.state.reply,
-                parent_id: null
+                parent_id: this.state.parent_id
             }, { withCredentials: true })
                 .then((response) => {
                 console.log(response);

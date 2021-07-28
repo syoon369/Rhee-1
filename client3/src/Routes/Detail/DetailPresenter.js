@@ -29,13 +29,32 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
         <button onClick={btnReplyAdd}>댓글</button>
         
         <div>
-            {nowreply.map((rep, index)=>(
+            {/* {nowreply.map((rep, index)=>(
+                <>
+                {(rep.parent_id==null) ? (
                 <>
                 <br/>
                 <div>작성자 {rep.nickname}</div>
                 <div>내용 {rep.content}</div>
-                <button onClick={showRereply} value={rep.comment_id}>답글 열기</button>
+                <button onClick={showRereply} value={rep.comment_id}>답글 여닫기</button>
                 <ReReplyBox current={rep.comment_id==replyParent}>
+                {nowreply.map((rere)=>{
+                    if(rere.parent_id==rep.comment_id){
+                        return(
+                            <>
+                            <div>{rere.nickname}</div>
+                            <div>{rere.content}</div>
+                            <button onClick={btnReplyDelete} value={rere.comment_id}>삭제</button>
+                            </>
+                        )
+                    }else{
+                        return(
+                            <>
+                            </>
+                        )
+                    }
+                })}
+                <br/>
                 <input onChange={reReplyChange} type="text"/>
                 <button onClick={submitRereply}>답글 입력</button>
                 </ReReplyBox>
@@ -43,7 +62,13 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
                 <br/>
                 <br/>
                 </>
-            ))}
+                ):(
+                    <>
+                    </>
+                )}
+                </>
+            ))} */}
+            {console.log(nowreply)}
         </div>
         </div>
     )} 
