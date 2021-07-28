@@ -9,6 +9,7 @@ import Sign from "../Routes/Sign";
 import Writing from "../Routes/Writing";
 import Detail from "../Routes/Detail";
 import Update from "../Routes/Update";
+import Store from "../Routes/Store";
 class Route1 extends Router{
     state={
         islogin:false
@@ -22,6 +23,7 @@ class Route1 extends Router{
             <Switch> {/* Switch : 한 번에 오직 하나의 Route만 render */}
                 <Route path="/" exact component={Home} /> {/*해당 path로 가면 Home 출력 */}
                 <Route path="/board" component={Board} />
+                <Route path="/store" component={Store} />
                 <Route path="/login" component={Login}/>
                 <Route path="/sign" component={Sign}/>
                 <Route path="/writing" component={Writing}/>
@@ -29,8 +31,7 @@ class Route1 extends Router{
                 <Route path="/detail/:id"  component={Detail}/>
                 {/* <Route path="/community" component={Community} />
                 <Route path="/editorial" component={Editorial} />
-                <Route path="/about" component={About} />
-                <Route path="/store" component={Store} /> */}
+                <Route path="/about" component={About} /> */}
                 <Redirect from="*" to="/" /> {/* 일치하는 Route가 없으면 무조건 Home(/)으로 보냄 */}
             </Switch>
             <Footer />

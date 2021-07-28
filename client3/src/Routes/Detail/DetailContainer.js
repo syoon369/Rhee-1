@@ -44,7 +44,6 @@ export default class DetailContainer extends React.Component {
                     nowreply: response.data
                 })
             })
-
     }
 
     ReplyChange = (e) => {
