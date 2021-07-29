@@ -254,14 +254,14 @@ const HomePresenter = ({
             </>
             ):(
             <>
-            <GoLogin to="/login" >login</GoLogin> 
+            <GoLogin to="/Rhee/login" >login</GoLogin> 
             </>
             )}
             <JournalBox>
                 <JournalUL>
                     <JournalLI>
                         <JournalHead>NEWS</JournalHead>
-                        <JournalLink to='/'>
+                        <JournalLink to='/Rhee'>
                             <JournalImg src={journal1} />
                         </JournalLink>
                         <JournalBot>Journal</JournalBot>
@@ -269,7 +269,7 @@ const HomePresenter = ({
                     </JournalLI>
                     <JournalLI>
                         <JournalHead>EDITORIAL</JournalHead>
-                        <JournalLink to='/'>
+                        <JournalLink to='/Rhee'>
                             <JournalImg src={journal1} />
                         </JournalLink>
                         <JournalBot>Fashion</JournalBot>
@@ -277,7 +277,7 @@ const HomePresenter = ({
                     </JournalLI>
                     <JournalLI>
                         <JournalHead>COMMUNITY</JournalHead>
-                        <JournalLink to='/'>
+                        <JournalLink to='/Rhee'>
                             <JournalImg src={journal1} />
                         </JournalLink>
                         <JournalBot>Journal</JournalBot>
@@ -285,7 +285,7 @@ const HomePresenter = ({
                     </JournalLI>
                     <JournalLI>
                         <JournalHead>JOURNAL</JournalHead>
-                        <JournalLink to='/'>
+                        <JournalLink to='/Rhee'>
                             <JournalImg src={journal4} />
                         </JournalLink>
                         <JournalBot>Journal</JournalBot>

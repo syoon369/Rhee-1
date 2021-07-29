@@ -60,26 +60,26 @@ const Img = styled.img`
 
 export default withRouter(({ location: { pathname } }) => (
     <Header>
-        <Span current={pathname === "/"}>
-            <SLink to="/">
+        <Span current={pathname === "/Rhee/"}>
+            <SLink to="/Rhee/">
                 <Img src={mainLogo} />
             </SLink>
         </Span>
         <List>
-            <Item current={pathname === "/community"} key="1">
-                <SLink to="/community">community</SLink>
+            <Item current={pathname === "/Rhee/community"} key="1">
+                <SLink to="/Rhee/community">community</SLink>
             </Item>
-            <Item current={pathname === "/editorial"} key="2">
-                <SLink to="/editorial">editorial</SLink>
+            <Item current={pathname === "/Rhee/editorial"} key="2">
+                <SLink to="/Rhee/editorial">editorial</SLink>
             </Item>
-            <Item current={pathname === "/about"} key="3">
-                <SLink to="/about">about</SLink>
+            <Item current={pathname === "/Rhee/about"} key="3">
+                <SLink to="/Rhee/about">about</SLink>
             </Item>
-            <Item current={pathname === "/store"} key="4">
-                <SLink to="/store">store</SLink>
+            <Item current={pathname === "/Rhee/store"} key="4">
+                <SLink to="/Rhee/store">store</SLink>
             </Item>
-            <Item current={pathname === "/board"} key="5">
-                <SLink to="/board">board</SLink>
+            <Item current={pathname === "/Rhee/board"} key="5">
+                <SLink to="/Rhee/board">board</SLink>
             </Item>
         </List>
     </Header>

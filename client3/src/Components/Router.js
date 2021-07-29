@@ -21,18 +21,18 @@ class Route1 extends Router{
         <>
             <Header />
             <Switch> {/* Switch : 한 번에 오직 하나의 Route만 render */}
-                <Route path="/" exact component={Home} /> {/*해당 path로 가면 Home 출력 */}
-                <Route path="/board" component={Board} />
-                <Route path="/store" component={Store} />
-                <Route path="/login" component={Login}/>
-                <Route path="/sign" component={Sign}/>
-                <Route path="/writing" component={Writing}/>
-                <Route path="/update/:id" component={Update}/>
-                <Route path="/detail/:id"  component={Detail}/>
+                <Route path="/Rhee" exact component={Home} /> {/*해당 path로 가면 Home 출력 */}
+                <Route path="/Rhee/board" component={Board} />
+                <Route path="/Rhee/store" component={Store} />
+                <Route path="/Rhee/login" component={Login}/>
+                <Route path="/Rhee/sign" component={Sign}/>
+                <Route path="/Rhee/writing" component={Writing}/>
+                <Route path="/Rhee/update/:id" component={Update}/>
+                <Route path="/Rhee/detail/:id"  component={Detail}/>
                 {/* <Route path="/community" component={Community} />
                 <Route path="/editorial" component={Editorial} />
                 <Route path="/about" component={About} /> */}
-                <Redirect from="*" to="/" /> {/* 일치하는 Route가 없으면 무조건 Home(/)으로 보냄 */}
+                <Redirect from="*" to="/Rhee" /> {/* 일치하는 Route가 없으면 무조건 Home(/)으로 보냄 */}
             </Switch>
             <Footer />
         </>
