@@ -2,6 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+const MainBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 const UpdatePresenter=({
     title,
     content,
@@ -12,6 +18,7 @@ const UpdatePresenter=({
     originContent
 })=>(
     <>
+    <MainBox>
     {console.log(title)}
     <br/>
     <br/>
@@ -24,6 +31,7 @@ const UpdatePresenter=({
     <input value={content} onChange={ContentChange} type="text" name="usercontent" />
     <button onClick={btnClick}>submit</button>
     Update
+    </MainBox>
     </>
 );
 

@@ -2,6 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+const MainBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 const ReReplyBox = styled.div`
     display:${props=>props.current ? "block":"none"};
 `;
@@ -26,6 +32,7 @@ const RereplyDiv = styled.div`
 
 const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply, loading, btnDelete, btnUpdate, btnReplyAdd, submitRereply, showRereply, reReplyChange, replyParent, btnReplyDelete, ReplyChange, isLogined})=>(
     <>
+    <MainBox>
     {console.log(loading)}
     {loading ? ( 
     <div>loading...</div>
@@ -114,6 +121,7 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
         </div>
         </div>
     )} 
+    </MainBox>
     </>
 );
 

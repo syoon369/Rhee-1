@@ -3,6 +3,12 @@ import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+const MainBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 const GoSign = styled(Link)`
     height:100px;
     width:100px;
@@ -29,6 +35,7 @@ const LoginPresenter = ({
     <br/>
     <br/>
     <br/>
+    <MainBox>
     <InputBox>
         <p>ID</p>
         <SytledInput onChange = {IdChange}></SytledInput>
@@ -42,6 +49,7 @@ const LoginPresenter = ({
         <br/>
         <GoSign to ="/sign">회원가입</GoSign>
     </InputBox>
+    </MainBox>
     </>
 );
 
