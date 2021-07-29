@@ -44,6 +44,11 @@ const BoardTable = styled.table`
     margin-top:20px;
 `;
 
+const MyInput=  styled.input`
+    border: 5px solid whitesmoke;
+    font-size : 28px;
+`;
+
 const BoardPresenter = ({
     data,
     title,
@@ -70,7 +75,7 @@ const BoardPresenter = ({
                     <br />
                     <br />
                     <br />
-                    <input type="text" onChange={termChange} />
+                    <MyInput type="text" onChange={termChange} />
                     <select onChange={menuChange} name="menu">
                         <option value="hashtag">해시태그</option>
                         <option value="content">제목+내용</option>
