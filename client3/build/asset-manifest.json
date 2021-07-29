@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/Rhee/static/js/main.20fba6f7.chunk.js",
+    "main.js.map": "/Rhee/static/js/main.20fba6f7.chunk.js.map",
+    "runtime-main.js": "/Rhee/static/js/runtime-main.6bc60c51.js",
+    "runtime-main.js.map": "/Rhee/static/js/runtime-main.6bc60c51.js.map",
+    "static/js/2.9fd9f07c.chunk.js": "/Rhee/static/js/2.9fd9f07c.chunk.js",
+    "static/js/2.9fd9f07c.chunk.js.map": "/Rhee/static/js/2.9fd9f07c.chunk.js.map",
+    "index.html": "/Rhee/index.html",
+    "static/js/2.9fd9f07c.chunk.js.LICENSE.txt": "/Rhee/static/js/2.9fd9f07c.chunk.js.LICENSE.txt",
+    "static/media/fashionPlat(1).4bf82133.jpg": "/Rhee/static/media/fashionPlat(1).4bf82133.jpg",
+    "static/media/fashionPlat(5).8cdae82e.jpg": "/Rhee/static/media/fashionPlat(5).8cdae82e.jpg",
+    "static/media/journal(1).6781ffce.jpg": "/Rhee/static/media/journal(1).6781ffce.jpg",
+    "static/media/journal(2).36f1f104.jpg": "/Rhee/static/media/journal(2).36f1f104.jpg",
+    "static/media/main_Logo.aac479c3.png": "/Rhee/static/media/main_Logo.aac479c3.png",
+    "static/media/menuImg(1).a45c7928.png": "/Rhee/static/media/menuImg(1).a45c7928.png",
+    "static/media/menuImg(2).e2c5c505.jpg": "/Rhee/static/media/menuImg(2).e2c5c505.jpg",
+    "static/media/menuImg(3).7de3817c.jpg": "/Rhee/static/media/menuImg(3).7de3817c.jpg",
+    "static/media/menuImg(4).cf71e508.jpg": "/Rhee/static/media/menuImg(4).cf71e508.jpg",
+    "static/media/picto3.af23f464.png": "/Rhee/static/media/picto3.af23f464.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6bc60c51.js",
+    "static/js/2.9fd9f07c.chunk.js",
+    "static/js/main.20fba6f7.chunk.js"
+  ]
+}
