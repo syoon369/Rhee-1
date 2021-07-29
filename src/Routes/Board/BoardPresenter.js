@@ -3,11 +3,68 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes, { array } from "prop-types";
 import styled from "styled-components";
 import axios from "axios";
+import menu1 from "../../img/menuImg(1).png";
 
 const MainBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+/* Video Box */
+const VideoBox = styled.div`
+    display: flex;
+    width: 100%;
+    height: 450px;
+`;
+
+const VideoDiv = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
+const VideoImg = styled.img`
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+`;
+
+const Hr = styled.hr`
+    height: 3px;
+    background-color: white;
+    border: none;
+`;
+
+const LeftLink = styled(Link)`
+    position: absolute;
+    left: 0;
+    text-align: center;
+    line-height: 450px;
+    width: 10%;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+`;
+
+const RightLink = styled(Link)`
+    position: absolute;
+    right: 0;
+    text-align: center;
+    line-height: 450px;
+    width: 10%;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+`;
+
+const VideoCon = styled.div`
+    position: absolute;
+    top: 303px;
+    left: 10%;
+    width: 80%;
+    z-index: 2;
 `;
 
 /* Board Box */
@@ -63,51 +120,59 @@ const BoardPresenter = ({
     searchTerm,
     searchMenu
 }) => (
-    <>
-        {loading ? (<div>loading...</div>) : (
-            <MainBox>
-                <BoardBox>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <MyInput type="text" onChange={termChange} />
-                    <select onChange={menuChange} name="menu">
-                        <option value="hashtag">해시태그</option>
-                        <option value="content">제목+내용</option>
-                        <option value="writer">작성자</option>
-                    </select>
-                    <button onClick={btnSearch}>글 검색하기</button>
-                    <br/>
-                    <button onClick={btnClick}>글 작성하기</button>
-                    <div>
-                        <BoardTable>
-                            <thead>
-                                <MyTh>
-                                    <td></td>
-                                </MyTh>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    {data.map((content, index) => (
-                                        <>
-                                            <MyTd key={index * 3 + 1} className={"data_nickname"}>작성자 {content.nickname}</MyTd>
-                                            <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/detail/${content.board_id}`}>제목 {content.title}</Link></MyTd>
-                                            <MyTd key={index * 3 + 3} className={"data_date"}>일시 {content.date}</MyTd>
-                                            <MyTd/>
-                                        </>
-                                    ))}
-                                </tr>
-                            </tbody>
-                        </BoardTable>
-                    </div>
-                </BoardBox>
-            </MainBox>
+    <> 
+    <MainBox>
+    <VideoBox>
+        <VideoDiv>
+        <VideoImg src={menu1} />
+        <LeftLink>←</LeftLink>
+        <VideoCon>
+        <Hr />
+        </VideoCon>
+        <RightLink>→</RightLink>
+        </VideoDiv>
+    </VideoBox>
+        {loading ? (<div>loading...</div>) : ( 
+            <BoardBox>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <MyInput type="text" onChange={termChange} />
+                <select onChange={menuChange} name="menu">
+                    <option value="hashtag">해시태그</option>
+                    <option value="content">제목+내용</option>
+                    <option value="writer">작성자</option>
+                    </select>                    <button onClick={btnSearch}>글 검색하기</button>
+                <br/>
+                <button onClick={btnClick}>글 작성하기</button>
+                <div>
+                    <BoardTable>
+                        <thead>
+                            <MyTh>
+                                <td></td>
+                            </MyTh>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {data.map((content, index) => (
+                                    <>
+                                        <MyTd key={index * 3 + 1} className={"data_nickname"}>작성자 {content.nickname}</MyTd>
+                                        <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/detail/${content.board_id}`}>제목 {content.title}</Link></MyTd>
+                                        <MyTd key={index * 3 + 3} className={"data_date"}>일시 {content.date}</MyTd>
+                                        <MyTd/>
+                                    </>
+                                    ))}                                </tr>
+                        </tbody>
+                    </BoardTable>
+                </div>
+            </BoardBox>
         )}
+        </MainBox>
     </>
 );
 
