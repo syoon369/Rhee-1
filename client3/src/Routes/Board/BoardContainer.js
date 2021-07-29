@@ -17,7 +17,7 @@ export default class extends React.Component {
 
     btnClick = async () => {
         if(this.state.isLogined ===true){
-           window.location.assign("/writing");
+           window.location.assign("/Rhee/writing");
         }else{
             window.alert("로그인을 해주세요");
         }
@@ -97,19 +97,6 @@ export default class extends React.Component {
     }
 
     async componentDidMount() {
-        // try {
-        //     const { data: data } = await userApi.load();
-        //     this.setState({
-        //         data
-        //     });
-        // } catch {
-        //     this.setState({ data: "nothing" })
-        // } finally {
-        //     this.setState({
-        //         loading: false
-        //     })
-        // }
-        
         await axios.get('http://localhost:3001/data',{withCredentials: true})
         .then((response)=>{
             if(response.data){

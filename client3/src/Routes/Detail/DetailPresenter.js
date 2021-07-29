@@ -1,6 +1,70 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import menu1 from "../../img/menuImg(1).png";
+import { Link, withRouter } from "react-router-dom";
+
+const MainBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+/* Video Box */
+const VideoBox = styled.div`
+    display: flex;
+    width: 100%;
+    height: 450px;
+`;
+
+const VideoDiv = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
+const VideoImg = styled.img`
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+`;
+
+const Hr = styled.hr`
+    height: 3px;
+    background-color: white;
+    border: none;
+`;
+
+const LeftLink = styled(Link)`
+    position: absolute;
+    left: 0;
+    text-align: center;
+    line-height: 450px;
+    width: 10%;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+`;
+
+const RightLink = styled(Link)`
+    position: absolute;
+    right: 0;
+    text-align: center;
+    line-height: 450px;
+    width: 10%;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+`;
+
+const VideoCon = styled.div`
+    position: absolute;
+    top: 303px;
+    left: 10%;
+    width: 80%;
+    z-index: 2;
+`;
 
 const ReReplyBox = styled.div`
     display:${props=>props.current ? "block":"none"};
@@ -26,16 +90,21 @@ const RereplyDiv = styled.div`
 
 const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply, loading, btnDelete, btnUpdate, btnReplyAdd, submitRereply, showRereply, reReplyChange, replyParent, btnReplyDelete, ReplyChange, isLogined})=>(
     <>
-    {console.log(loading)}
+    <MainBox>
+    <VideoBox>
+        <VideoDiv>
+            <VideoImg src={menu1} />
+            <LeftLink>←</LeftLink>
+            <VideoCon>
+            <Hr />
+            </VideoCon>
+            <RightLink>→</RightLink>
+        </VideoDiv>
+    </VideoBox>
     {loading ? ( 
     <div>loading...</div>
     ):(
         <div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
         {nickname}<br/>
         {date}<br/>
         {title}<br/>
@@ -46,46 +115,7 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
         <input onChange={ReplyChange} type="text"/>
         <button onClick={btnReplyAdd}>댓글</button>
         <br/><br/>
-        <div>
-            {/* {nowreply.map((rep, index)=>(
-                <>
-                {(rep.parent_id==null) ? (
-                <>
-                <br/>
-                <div>작성자 {rep.nickname}</div>
-                <div>내용 {rep.content}</div>
-                <button onClick={showRereply} value={rep.comment_id}>답글 여닫기</button>
-                <ReReplyBox current={rep.comment_id==replyParent}>
-                {nowreply.map((rere)=>{
-                    if(rere.parent_id==rep.comment_id){
-                        return(
-                            <>
-                            <div>{rere.nickname}</div>
-                            <div>{rere.content}</div>
-                            <button onClick={btnReplyDelete} value={rere.comment_id}>삭제</button>
-                            </>
-                        )
-                    }else{
-                        return(
-                            <>
-                            </>
-                        )
-                    }
-                })}
-                <br/>
-                <input onChange={reReplyChange} type="text"/>
-                <button onClick={submitRereply}>답글 입력</button>
-                </ReReplyBox>
-                <button onClick={btnReplyDelete} value={rep.comment_id}>삭제</button>
-                <br/>
-                <br/>
-                </>
-                ):(
-                    <>
-                    </>
-                )}
-                </>
-            ))} */}
+            <div>
             {nowreply.map((reply)=>(
                 <>
                 {(reply.parent_id==null) ? (
@@ -110,10 +140,10 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
                 )}
                 </>
             ))}
-            {console.log(nowreply)}
-        </div>
+            </div>
         </div>
     )} 
+    </MainBox>
     </>
 );
 

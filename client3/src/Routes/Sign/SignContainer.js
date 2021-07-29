@@ -79,7 +79,7 @@ export default class extends React.Component {
             .catch((error) => {
                 console.log(error);
             });
-        window.location.assign("/login");
+        window.location.assign("/Rhee/login");
     }
     
 

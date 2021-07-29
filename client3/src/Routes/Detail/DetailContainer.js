@@ -70,7 +70,7 @@ export default class DetailContainer extends React.Component {
 
             }).then((response) => {
                 if (response.status === 200) {
-                    window.location.assign(`/update/${this.state.board_id}`);
+                    window.location.assign(`/Rhee/update/${this.state.board_id}`);
                 } else {
                     window.alert("수정 하지 말라");
                 }
@@ -94,7 +94,7 @@ export default class DetailContainer extends React.Component {
                     if (response.status === 200) {
                         // console.log(response);
                         console.log(response.data);
-                        window.location.assign("/board");
+                        window.location.assign("/Rhee/board");
                         // console.log(response.status);
                     } else {
                         console.log("no");
@@ -169,25 +169,6 @@ export default class DetailContainer extends React.Component {
                     replyParent: ""
                 }, () => console.log(this.state.replyParent));
             }
-            // await axios.post("http://localhost:3001/data/reply/reply", {
-            //     parent_id: e.target.value
-            // }, { withCredentials: true })
-            //     .then((response) => {
-            //         console.log(response.status);
-            //         if (response.status === 200) {
-            //             // 
-            //             //console.log(response.data);
-            //             window.location.reload();
-            //             // console.log(response.status);
-            //         } else {
-            //             console.log("no");
-            //             window.alert("삭제 하지 말라");
-            //         }
-            //         // console.log(response);
-            //         // window.location.reload();
-            //     }).catch((error) => {
-            //         console.log("오류");
-            //     })
     }
 
     submitRereply = async (e) => {

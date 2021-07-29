@@ -42,7 +42,7 @@ export default class LoginContainer extends React.Component {
                     if(response.data){
                         //this.setState({isLogined : true});
                         window.alert(response.data+"님, 환영합니다")
-                        window.location.assign("/");
+                        window.location.assign("/Rhee/");
                         
                     }
                  }else{
@@ -77,20 +77,3 @@ export default class LoginContainer extends React.Component {
         )
     }
 }
-
-
-// const mapStateToProps = (state) => ({
-//     isLogined : state.isLogined
-// });
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         login: () => dispatch(login()),
-//         logout: () => dispatch(logout())
-//     }
-// }
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(LoginContainer);

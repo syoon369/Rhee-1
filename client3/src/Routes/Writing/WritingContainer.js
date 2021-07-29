@@ -37,7 +37,7 @@ export default class WritingContainer extends React.Component {
         .catch((error) => {
             console.log(error);
         });
-        window.location.assign("/board");
+        window.location.assign("/Rhee/board");
     }
 
     render() {

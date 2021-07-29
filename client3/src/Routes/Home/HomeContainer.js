@@ -12,7 +12,7 @@ export default class extends React.Component {
     logout = async()=>{
         window.alert("로그아웃되었습니다.");
         axios.get("http://localhost:3001/logout",{withCredentials: true});
-        window.location.replace("/");
+        window.location.replace("/Rhee/");
     }
 
     async componentDidMount() {
