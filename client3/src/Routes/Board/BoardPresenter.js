@@ -96,7 +96,7 @@ const BoardPresenter = ({
                                     {data.map((content, index) => (
                                         <>
                                             <MyTd key={index * 3 + 1} className={"data_nickname"}>작성자 {content.nickname}</MyTd>
-                                            <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/detail/${content.board_id}`}>제목 {content.title}</Link></MyTd>
+                                            <MyTd key={index * 3 + 2} className={"data_title"}><Link to={`/Rhee/detail/${content.board_id}`}>제목 {content.title}</Link></MyTd>
                                             <MyTd key={index * 3 + 3} className={"data_date"}>일시 {content.date}</MyTd>
                                             <MyTd/>
                                         </>
