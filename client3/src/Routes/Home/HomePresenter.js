@@ -45,6 +45,14 @@ const Hr = styled.hr`
     border: none;
 `;
 
+const Hr2 = styled.hr`
+    height: 3px;
+    background-color: white;
+    border: 1.5px solid black;
+    width:70%;
+    border-radius: 25px;
+`;
+
 const LeftLink = styled(Link)`
     position: absolute;
     left: 0;
@@ -220,11 +228,21 @@ const PickCont = styled.p`
 `;
 
 const GoLogin = styled(Link)`
+    line-height: 50px;
+    font-size:25px;
+`;
 
+const Hellomessage = styled.div`
+    padding-top:25px;
+    font-size:15px;
 `;
 
 const GoLogout = styled.button`
-
+    border:none;
+    background-color:white;
+    line-height: 50px;
+    font-size:25px;
+    width:150px;
 `;
 
 const HomePresenter = ({
@@ -247,14 +265,15 @@ const HomePresenter = ({
             {isLogined ? 
             (
             <>
-            <br/>
-            <div>{nickname}님, 환영합니다!!</div>
+            <Hellomessage>{nickname}님, 환영합니다!!</Hellomessage>
             <GoLogout onClick={logout}>logout
             </GoLogout>
+            <Hr2 />
             </>
             ):(
             <>
-            <GoLogin to="/Rhee/login" >login</GoLogin> 
+            <GoLogin to="/Rhee/login" >login</GoLogin>
+            <Hr2 /> 
             </>
             )}
             <JournalBox>

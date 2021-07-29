@@ -40,31 +40,20 @@ export default class LoginContainer extends React.Component {
                 console.log(response.status);
                  if (response.status === 200) {
                     if(response.data){
-                        //this.setState({isLogined : true});
                         window.alert(response.data+"님, 환영합니다")
                         window.location.assign("/Rhee/");
-                        
                     }
                  }else{
                     window.alert("다시해라");//login success
-                    // isLogined = false;
                     }
             })
             .catch((error) => {
-                //console.log(error);
             });
-        // window.location.reload();
     }
 
     render() {
         return (
             <>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
             <LoginPresenter
             id={this.id}
             password={this.password}
@@ -72,7 +61,6 @@ export default class LoginContainer extends React.Component {
             PasswordChange = {this.PasswordChange}
             btnClick = {this.btnClick}    
             />
-            {/* <div onClick>={this.login}</div> */}
             </>
         )
     }

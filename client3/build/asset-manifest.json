@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/Rhee/static/js/main.4f904553.chunk.js",
-    "main.js.map": "/Rhee/static/js/main.4f904553.chunk.js.map",
+    "main.js": "/Rhee/static/js/main.3bbc754a.chunk.js",
+    "main.js.map": "/Rhee/static/js/main.3bbc754a.chunk.js.map",
     "runtime-main.js": "/Rhee/static/js/runtime-main.6bc60c51.js",
     "runtime-main.js.map": "/Rhee/static/js/runtime-main.6bc60c51.js.map",
-    "static/js/2.9fd9f07c.chunk.js": "/Rhee/static/js/2.9fd9f07c.chunk.js",
-    "static/js/2.9fd9f07c.chunk.js.map": "/Rhee/static/js/2.9fd9f07c.chunk.js.map",
+    "static/js/2.637421cb.chunk.js": "/Rhee/static/js/2.637421cb.chunk.js",
+    "static/js/2.637421cb.chunk.js.map": "/Rhee/static/js/2.637421cb.chunk.js.map",
     "index.html": "/Rhee/index.html",
-    "static/js/2.9fd9f07c.chunk.js.LICENSE.txt": "/Rhee/static/js/2.9fd9f07c.chunk.js.LICENSE.txt",
+    "static/js/2.637421cb.chunk.js.LICENSE.txt": "/Rhee/static/js/2.637421cb.chunk.js.LICENSE.txt",
     "static/media/fashionPlat(1).4bf82133.jpg": "/Rhee/static/media/fashionPlat(1).4bf82133.jpg",
     "static/media/fashionPlat(5).8cdae82e.jpg": "/Rhee/static/media/fashionPlat(5).8cdae82e.jpg",
     "static/media/journal(1).6781ffce.jpg": "/Rhee/static/media/journal(1).6781ffce.jpg",
@@ -21,7 +21,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.6bc60c51.js",
-    "static/js/2.9fd9f07c.chunk.js",
-    "static/js/main.4f904553.chunk.js"
+    "static/js/2.637421cb.chunk.js",
+    "static/js/main.3bbc754a.chunk.js"
   ]
 }
