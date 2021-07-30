@@ -66,6 +66,73 @@ const VideoCon = styled.div`
     z-index: 2;
 `;
 
+const Loading = styled.p`
+    font-size:35px;
+    line-height:100px;
+`;
+
+const Article = styled.div`
+    font-size:20px;
+    padding:25px;
+    display:flex;
+    width:100%;
+`;
+
+const Ar1 = styled.div`
+    padding:20px;
+    width:20%;
+    border-right:3px solid lightgray;
+`;
+
+const Ar2 = styled.div`
+    padding:20px;
+    width:50%;
+    border-right:3px solid lightgray;
+`;
+
+const Ar3 = styled.div`
+    padding:20px;
+    width:30%;
+`;
+
+const Content = styled.div`
+    padding:25px;
+    font-size:18px;
+    text-align: left;
+`;
+
+const Button1 = styled.button`
+    background-color:white;
+    border:none;
+    font-size:15px;
+    width:50px;
+`;
+
+const Button2 = styled.button`
+    background-color:white;
+    color:red;
+    border:none;
+    font-size:10px;
+    &:hover{
+        color:black;
+    }
+`;
+
+const BtnBox = styled.div`
+    display:flex;
+    margin-left:75%;
+`;
+
+const ReplyMake = styled.div`
+    display:flex;
+`;
+
+const MyText = styled.textarea`
+    width:300px;
+    height:100px;
+    resize:none;
+`;
+
 const ReReplyBox = styled.div`
     display:${props=>props.current ? "block":"none"};
 `;
@@ -94,54 +161,56 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
     <VideoBox>
         <VideoDiv>
             <VideoImg src={menu1} />
-            <LeftLink>←</LeftLink>
+            <LeftLink to={"/Rhee/store"}>←</LeftLink>
             <VideoCon>
             <Hr />
             </VideoCon>
-            <RightLink>→</RightLink>
+            <RightLink to={"/Rhee/"}>→</RightLink>
         </VideoDiv>
     </VideoBox>
     {loading ? ( 
-    <div>loading...</div>
+    <Loading>loading...</Loading>
     ):(
+        <>
+        <Article>    
+        <Ar1>{nickname}</Ar1>
+        <Ar2>{title}</Ar2>
+        <Ar3>{date.substring(0,10)}</Ar3>
+        </Article>
+        <Content>{content}</Content>
+        <BtnBox>
+        <Button1 onClick={btnUpdate}>수정</Button1>
+        <Button1 onClick={btnDelete}>삭제</Button1>
+        </BtnBox>
+        <ReplyMake>
+        <MyText onChange={ReplyChange} type="text"/>
+        <Button2 onClick={btnReplyAdd}>댓글</Button2>
+        </ReplyMake>
         <div>
-        {nickname}<br/>
-        {date}<br/>
-        {title}<br/>
-        {content}<br/>
-        <button onClick={btnUpdate}>수정</button>
-        <button onClick={btnDelete}>삭제</button>
-        <br/>
-        <input onChange={ReplyChange} type="text"/>
-        <button onClick={btnReplyAdd}>댓글</button>
-        <br/><br/>
-            <div>
             {nowreply.map((reply)=>(
                 <>
                 {(reply.parent_id==null) ? (
                     <>
-                    <div>작성자 {reply.nickname}</div>
-                    <div>내용 {reply.content}
-                    <button value={reply.comment_id} onClick={showRereply}>답글 보기</button></div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<div>
+                    {reply.nickname}
+                    {reply.content}
+                    <Button2 value={reply.comment_id} onClick={showRereply}>답글</Button2>
+                    <div>
                     <ReplyInput onChange={reReplyChange} current={reply.comment_id==replyParent} type="text"/>
                     <ReplyButton onClick={submitRereply} current={reply.comment_id==replyParent}>작성</ReplyButton>
                     </div>
-                    <br/>
                     </>
                 ):(
                     <>
                     <RereplyDiv current={reply.parent_id==replyParent}>
-                    <ReplyWriter>&nbsp;&nbsp;&nbsp;&nbsp;작성자 {reply.nickname}</ReplyWriter>
-                    <ReplyContent>&nbsp;&nbsp;&nbsp;&nbsp;내용 {reply.content}</ReplyContent>
-                    <br/>
+                    <ReplyWriter>작성자 {reply.nickname}</ReplyWriter>
+                    <ReplyContent>내용 {reply.content}</ReplyContent>
                     </RereplyDiv>
                     </>
                 )}
                 </>
             ))}
             </div>
-        </div>
+        </>
     )} 
     </MainBox>
     </>

@@ -92,11 +92,11 @@ const LoginPresenter = ({
     <VideoBox>
         <VideoDiv>
             <VideoImg src={menu1} />
-            <LeftLink>←</LeftLink>
+            <LeftLink to={"/Rhee/board"}>←</LeftLink>
             <VideoCon>
                 <Hr />
             </VideoCon>
-            <RightLink>→</RightLink>
+            <RightLink to={"/Rhee/community"}>→</RightLink>
         </VideoDiv>
     </VideoBox>
     <InputBox>

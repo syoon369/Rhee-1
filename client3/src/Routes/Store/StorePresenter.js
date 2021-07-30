@@ -74,11 +74,11 @@ const StorePresenter =({
     <VideoBox>
         <VideoDiv>
             <VideoImg src={menu1} />
-            <LeftLink>←</LeftLink>
+            <LeftLink to={"/Rhee/about"}>←</LeftLink>
             <VideoCon>
                 <Hr />
             </VideoCon>
-            <RightLink>→</RightLink>
+            <RightLink to={"/Rhee/board"}>→</RightLink>
         </VideoDiv>
     </VideoBox>
     Store

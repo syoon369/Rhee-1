@@ -79,11 +79,11 @@ const UpdatePresenter=({
     <VideoBox>
         <VideoDiv>
             <VideoImg src={menu1} />
-            <LeftLink>←</LeftLink>
+            <LeftLink to={"/Rhee/store"}>←</LeftLink>
             <VideoCon>
                 <Hr />
             </VideoCon>
-            <RightLink>→</RightLink>
+            <RightLink to={"/Rhee/"}>→</RightLink>
         </VideoDiv>
     </VideoBox>
     <input value={title} onChange={TitleChange} type="text" name="usertitle" />

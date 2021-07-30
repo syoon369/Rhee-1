@@ -24,10 +24,16 @@ export default class extends React.Component {
         })
     }
 
+    passportClick = async()=>{
+        // await axios.get("http://localhost:3001/auth/google",{withCredentials: true})
+        window.open(`http://localhost:3001/auth/google`, "_self");
+    }
+
     render() {
         console.log(this.state);
         return (
             <HomePresenter
+                passportClick = {this.passportClick}
                 isLogined = {this.state.isLogined}
                 logout = {this.logout}
                 nickname={this.state.nickname}/>

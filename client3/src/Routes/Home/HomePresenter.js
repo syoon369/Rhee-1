@@ -245,21 +245,31 @@ const GoLogout = styled.button`
     width:150px;
 `;
 
+const Passportbtn = styled.button`
+    background-color:white;
+    border:none;
+    font-size:20px;
+    &:hover{
+        color:blue;
+    }
+`;
+
 const HomePresenter = ({
     isLogined,
     logout,
-    nickname
+    nickname,
+    passportClick
 }) => (
     <>
         <MainBox>
             <VideoBox>
                 <VideoDiv>
                     <VideoImg src={menu1} />
-                    <LeftLink>←</LeftLink>
+                    <LeftLink to={"/Rhee/board"}>←</LeftLink>
                     <VideoCon>
                         <Hr />
                     </VideoCon>
-                    <RightLink>→</RightLink>
+                    <RightLink to={"/Rhee/community"}>→</RightLink>
                 </VideoDiv>
             </VideoBox>
             {isLogined ? 
@@ -273,6 +283,7 @@ const HomePresenter = ({
             ):(
             <>
             <GoLogin to="/Rhee/login" >login</GoLogin>
+            <Passportbtn onClick={passportClick}>Passport로 Login</Passportbtn>
             <Hr2 /> 
             </>
             )}
@@ -377,7 +388,8 @@ const HomePresenter = ({
 HomePresenter.propTypes = {
     isLogined:PropTypes.bool,
     logout:PropTypes.func.isRequired,
-    nickname:PropTypes.string
+    nickname:PropTypes.string,
+    passportClick:PropTypes.func.isRequired
 }
 
 export default HomePresenter;

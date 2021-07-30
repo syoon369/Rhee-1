@@ -7,6 +7,8 @@ var MySQLStore = require('express-mysql-session')(session)
 const PORT = process.env.PORT || 3001;
 const db = require('./config/db');
 // const { response, urlencoded } = require('express');
+const passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 app.use(express.json());
 app.use(express.urlencoded({ extend: true }));
@@ -26,10 +28,48 @@ app.use(session({
     cookie: {
         secure: false
     }
-}))
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+})
+
+passport.deserializeUser( function (id, done) {
+    done(null, id);
+})
+
+passport.use(new GoogleStrategy({
+        clientID: '',
+        clientSecret: '',
+        callbackURL: "https://localhost:3001/auth/google/callback"
+        //passReqToCallback: true,
+    },
+    function(accessToken, refreshToken, profile, cb){
+        // console.log(profile);
+        // console.log(accessToken);
+        
+        // return done(null, profile);
+        return cb(err, user);
+    }
+))
+
+app.get('/auth/google', function(req, res, next){
+    passport.authenticate('google', {scope : ['profile']},function(err, user, info){
+
+    })(req, res, next);
+    console.log("Get google");
+    // console.log(res);
+});
+
+app.get('/auth/google/callback', (req,res,next)=>{
+    passport.authenticate('google')(req,res,next);
+    res.redirect("https://localhost:3000/Rhee");
+});
 
 app.get('/', (req, res) => {
-    console.log("Get /");
+    
     req.session.where = "Get /";
     req.session.save(function () {
         // console.log(req.session);
@@ -47,13 +87,11 @@ app.get('/data', (req, res) => {
     console.log("Get Data");
     req.session.where = "Get data";
     req.session.save(function () {
-        // console.log(req.session);
         db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date DESC`, function (error, result) {
             if (error) {
                 throw error;
             }
             res.send(result);
-            //console.log(topics);
         });
     });
 });
@@ -266,7 +304,7 @@ app.post('/data/reply/add', (req, res) => {
             throw error;
         }
         // console.log(result);
-        
+
         res.send(result);
         //console.log(topics);
     });
@@ -277,14 +315,14 @@ app.post('/data/reply/delete', (req, res) => {
         comment_id: req.body.comment_id
     }
     console.log(d);
-    db.query(`DELETE FROM comment WHERE comment_id=? and writer=?`,[d.comment_id, req.session.user_id], function(error,result){
-        if(error){
+    db.query(`DELETE FROM comment WHERE comment_id=? and writer=?`, [d.comment_id, req.session.user_id], function (error, result) {
+        if (error) {
             throw error;
         }
         console.log(result);
-        if(result.affectedRows){
+        if (result.affectedRows) {
             res.sendStatus(200);
-        }else{
+        } else {
             res.sendStatus(204);
         }
     })
@@ -293,17 +331,17 @@ app.post('/data/reply/delete', (req, res) => {
 app.get('/data/reply/:id', (req, res) => {
     console.log("Get Reply");
     var final_result = {
-        count : [],
-        result : []
+        count: [],
+        result: []
     };
-    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY parent_id`,[req.params.id], function(error,result){
-        if(error){
+    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? ORDER BY parent_id`, [req.params.id], function (error, result) {
+        if (error) {
             throw error;
         }
         final_result.result.push(result);
         console.log(final_result);
-        db.query(`SELECT parent_id, count(comment_id) from comment group by parent_id order by parent_id`, function(error,result2){
-            if(error){
+        db.query(`SELECT parent_id, count(comment_id) from comment group by parent_id order by parent_id`, function (error, result2) {
+            if (error) {
                 throw error;
             }
             console.log("된다")
@@ -316,24 +354,24 @@ app.get('/data/reply/:id', (req, res) => {
 
 app.get('/data/reply/reply/:id', (req, res) => {
     console.log("Get reply/reply")
-    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? and c.parent_id IS NULL ORDER BY comment_id`,[req.params.id], function(error,result){
-        if(error){
+    db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? and c.parent_id IS NULL ORDER BY comment_id`, [req.params.id], function (error, result) {
+        if (error) {
             throw error;
         }
-        var arrComment= JSON.parse(JSON.stringify(result));
+        var arrComment = JSON.parse(JSON.stringify(result));
 
-        db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? and c.parent_id IS NOT NULL ORDER BY comment_id`,[req.params.id], function(error,result2){
-            if(error){
+        db.query(`SELECT comment_id, board, parent_id, nickname, content FROM user u , comment c WHERE u.user_id = c.writer and c.board = ? and c.parent_id IS NOT NULL ORDER BY comment_id`, [req.params.id], function (error, result2) {
+            if (error) {
                 throw error;
             }
             var arrReply = JSON.parse(JSON.stringify(result2))
 
             var arrResult = new Array();
-    
+
             arrComment.forEach(comment => {
                 arrResult.push(comment);
-                arrReply.forEach(reply =>{
-                    if(comment.comment_id === reply.parent_id){
+                arrReply.forEach(reply => {
+                    if (comment.comment_id === reply.parent_id) {
                         arrResult.push(reply);
                     }
                 });

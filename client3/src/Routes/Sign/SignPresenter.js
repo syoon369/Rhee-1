@@ -94,11 +94,11 @@ const SignPresenter = ({
     <VideoBox>
         <VideoDiv>
             <VideoImg src={menu1} />
-            <LeftLink>←</LeftLink>
+            <LeftLink> to={"/Rhee/board"}←</LeftLink>
             <VideoCon>
                 <Hr />
             </VideoCon>
-            <RightLink>→</RightLink>
+            <RightLink to={"/Rhee/community"}>→</RightLink>
         </VideoDiv>
     </VideoBox>
     아이디<input onChange = {IdChange} type = 'text'></input>
