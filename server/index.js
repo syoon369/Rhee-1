@@ -33,10 +33,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function (user, done) {
+    // console.log("Call SerializeUser");
     done(null, user.id);
 })
 
 passport.deserializeUser( function (id, done) {
+    // console.log("Call DeserializeUser");
     done(null, id);
 })
 
@@ -47,10 +49,7 @@ passport.use(new GoogleStrategy({
         //passReqToCallback: true,
     },
     function(accessToken, refreshToken, profile, done){
-        console.log(profile.displayName);
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
-            return done(err, user);
-        });
+        return done(null, profile);
     }
 ))
 
@@ -71,16 +70,24 @@ app.get('/auth/google/callback', (req,res,next)=>{
 });
 
 app.get('/auth/google/success/', (req,res,next)=>{
+    console.log("Login Success: "+req.user);
+    db.query(`SELECT * FROM user WHERE google_id = ?`,[req.user],(error, result)=>{
+        if(error){
+            throw error;
+        }
+    });
     res.redirect("http://localhost:3000/Rhee/board");
 });
 
 app.get('/auth/google/fail/', (req,res,next)=>{
+    console.log("Login Failed");
     res.redirect("http://localhost:3000/Rhee/login");
 });
 
 app.get('/', (req, res) => {
-    
-    req.session.where = "Get /";
+    if(req.user!=null){
+        console.log(req.user);
+    }
     req.session.save(function () {
         // console.log(req.session);
         if (req.session.nickname != null) {
@@ -95,7 +102,6 @@ app.get('/', (req, res) => {
 
 app.get('/data', (req, res) => {
     console.log("Get Data");
-    req.session.where = "Get data";
     req.session.save(function () {
         db.query(`SELECT board_id,title,date,nickname FROM board b , user u WHERE b.writer=u.user_id ORDER BY date DESC`, function (error, result) {
             if (error) {
@@ -235,7 +241,6 @@ app.post('/signin', (req, res) => {
         } else {
             req.session.user_id = result[0].user_id;
             req.session.nickname = result[0].nickname;
-            req.session.where = "signin";
             req.session.save(function () {
                 console.log(req.session.nickname);
                 res.send(req.session.nickname);
@@ -248,7 +253,6 @@ app.get('/logout', (req, res) => {
     console.log("post logout");
     delete req.session.nickname;
     delete req.session.user_id;
-    delete req.session.where;
     req.session.save(() => {
         res.redirect("/");
     });
