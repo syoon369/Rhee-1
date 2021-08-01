@@ -43,29 +43,39 @@ passport.deserializeUser( function (id, done) {
 passport.use(new GoogleStrategy({
         clientID: '',
         clientSecret: '',
-        callbackURL: "https://localhost:3001/auth/google/callback"
+        callbackURL: "http://localhost:3001/auth/google/callback"
         //passReqToCallback: true,
     },
-    function(accessToken, refreshToken, profile, cb){
-        // console.log(profile);
-        // console.log(accessToken);
-        
-        // return done(null, profile);
-        return cb(err, user);
+    function(accessToken, refreshToken, profile, done){
+        console.log(profile.displayName);
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+            return done(err, user);
+        });
     }
 ))
 
 app.get('/auth/google', function(req, res, next){
-    passport.authenticate('google', {scope : ['profile']},function(err, user, info){
-
-    })(req, res, next);
     console.log("Get google");
+    passport.authenticate('google', {scope : ['profile']},function(err, user, info){
+        
+    })(req, res, next);
     // console.log(res);
 });
 
 app.get('/auth/google/callback', (req,res,next)=>{
-    passport.authenticate('google')(req,res,next);
-    res.redirect("https://localhost:3000/Rhee");
+    console.log("Get Auth");
+    passport.authenticate('google',{
+        successRedirect:'/auth/google/success',
+        failureRedirect:'/auth/google/fail',
+    })(req,res,next);
+});
+
+app.get('/auth/google/success/', (req,res,next)=>{
+    res.redirect("http://localhost:3000/Rhee/board");
+});
+
+app.get('/auth/google/fail/', (req,res,next)=>{
+    res.redirect("http://localhost:3000/Rhee/login");
 });
 
 app.get('/', (req, res) => {
