@@ -6,4 +6,7 @@
 
 ## Backend
 
-- Node
+- Nodejs
+
+
+## Database
