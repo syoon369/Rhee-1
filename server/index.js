@@ -33,59 +33,69 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function (user, done) {
-    // console.log("Call SerializeUser");
+    console.log("Call SerializeUser");
     done(null, user.id);
 })
 
-passport.deserializeUser( function (id, done) {
-    // console.log("Call DeserializeUser");
+passport.deserializeUser(function (id, done) {
+    console.log("Call DeserializeUser");
     done(null, id);
 })
 
 passport.use(new GoogleStrategy({
-        clientID: '',
-        clientSecret: '',
-        callbackURL: "http://localhost:3001/auth/google/callback"
-        //passReqToCallback: true,
-    },
-    function(accessToken, refreshToken, profile, done){
+    clientID: '',
+    clientSecret: '',
+    callbackURL: "http://localhost:3001/auth/google/callback"
+    //passReqToCallback: true,
+},
+    function (accessToken, refreshToken, profile, done) {
+        // console.log(profile);
         return done(null, profile);
     }
 ))
 
-app.get('/auth/google', function(req, res, next){
+app.get('/auth/google', function (req, res, next) {
     console.log("Get google");
-    passport.authenticate('google', {scope : ['profile']},function(err, user, info){
-        
+    passport.authenticate('google', { scope: ['profile'] }, function (err, user, info) {
     })(req, res, next);
     // console.log(res);
 });
 
-app.get('/auth/google/callback', (req,res,next)=>{
+app.get('/auth/google/callback', (req, res, next) => {
     console.log("Get Auth");
-    passport.authenticate('google',{
-        successRedirect:'/auth/google/success',
-        failureRedirect:'/auth/google/fail',
-    })(req,res,next);
+    passport.authenticate('google', {
+        successRedirect: '/auth/google/success',
+        failureRedirect: '/auth/google/fail',
+    })(req, res, next);
 });
 
-app.get('/auth/google/success/', (req,res,next)=>{
-    console.log("Login Success: "+req.user);
-    db.query(`SELECT * FROM user WHERE google_id = ?`,[req.user],(error, result)=>{
-        if(error){
+app.get('/auth/google/success/', (req, res, next) => {
+    console.log("Login Success: " + req.user);
+    db.query(`SELECT * FROM user WHERE google_id = ?`, [req.user], (error, result) => {
+        if (error) {
             throw error;
         }
+        else if (result.length === 0) {
+            res.redirect("http://localhost:3000/Rhee/googlesign");
+        } else {
+            req.session.user_id = result[0].user_id;
+            req.session.nickname = result[0].nickname;
+            req.session.save(function () {
+                console.log(req.session.nickname);
+                res.redirect("http://localhost:3000/Rhee/");
+            })
+        }
     });
-    res.redirect("http://localhost:3000/Rhee/board");
+    // res.redirect("http://localhost:3000/Rhee/sign");
 });
 
-app.get('/auth/google/fail/', (req,res,next)=>{
+app.get('/auth/google/fail/', (req, res, next) => {
     console.log("Login Failed");
     res.redirect("http://localhost:3000/Rhee/login");
 });
 
 app.get('/', (req, res) => {
-    if(req.user!=null){
+    if (req.user != null) {
         console.log(req.user);
     }
     req.session.save(function () {
@@ -253,12 +263,15 @@ app.get('/logout', (req, res) => {
     console.log("post logout");
     delete req.session.nickname;
     delete req.session.user_id;
+    delete req.user;
+    req.logout();
     req.session.save(() => {
         res.redirect("/");
     });
 });
 
 app.post('/search/hash', (req, res) => {
+    console.log("Search Hashtag");
     const d = {
         searchTerm: req.body.searchTerm
     }
@@ -333,7 +346,6 @@ app.post('/data/reply/delete', (req, res) => {
         if (error) {
             throw error;
         }
-        console.log(result);
         if (result.affectedRows) {
             res.sendStatus(200);
         } else {
@@ -394,6 +406,25 @@ app.get('/data/reply/reply/:id', (req, res) => {
         })
     })
 })
+
+app.post('/signup/google', (req, res) => {
+    console.log("Post Google SignUp");
+    console.log(req.user);
+    const d = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        nickname: req.body.nickname,
+        birth: req.body.birth,
+        sex: req.body.sex
+    }
+    console.log(d);
+    db.query(`INSERT INTO user(user_id, password, f_name, l_name, nickname, birth_date, sex, google_id) VALUES (?,?,?,?,?,?,?,?)`, [req.user, '0000' ,d.firstname, d.lastname, d.nickname, d.birth, d.sex, req.user], function (error, result) {
+        if (error) {
+            throw error;
+        }
+    })
+    res.send(d);
+});
 
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);

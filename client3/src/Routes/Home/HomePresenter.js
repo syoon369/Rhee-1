@@ -283,7 +283,7 @@ const HomePresenter = ({
             ):(
             <>
             <GoLogin to="/Rhee/login" >login</GoLogin>
-            <Passportbtn onClick={passportClick}>Passport로 Login</Passportbtn>
+            <Passportbtn onClick={passportClick}>Google ID 로 Login</Passportbtn>
             <Hr2 /> 
             </>
             )}

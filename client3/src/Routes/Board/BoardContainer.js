@@ -12,7 +12,7 @@ export default class extends React.Component {
         isLogined:false,
         nickname:"",
         searchTerm:"",
-        searchMenu:"hashtag"
+        searchMenu:"content"
     }
 
     btnClick = async () => {

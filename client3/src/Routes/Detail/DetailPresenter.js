@@ -202,8 +202,8 @@ const DetailPresenter=({title, date,nickname, board_id, content, nowreply, reply
                 ):(
                     <>
                     <RereplyDiv current={reply.parent_id==replyParent}>
-                    <ReplyWriter>작성자 {reply.nickname}</ReplyWriter>
-                    <ReplyContent>내용 {reply.content}</ReplyContent>
+                    <ReplyWriter>{reply.nickname}</ReplyWriter>
+                    <ReplyContent>{reply.content}</ReplyContent>
                     </RereplyDiv>
                     </>
                 )}

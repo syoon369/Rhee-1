@@ -25,7 +25,6 @@ export default class extends React.Component {
     }
 
     passportClick = async()=>{
-        // await axios.get("http://localhost:3001/auth/google",{withCredentials: true})
         window.open(`http://localhost:3001/auth/google`, "_self");
     }
 

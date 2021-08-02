@@ -6,6 +6,7 @@ import Home from "../Routes/Home";
 import Board from "../Routes/Board";
 import Login from "../Routes/Login";
 import Sign from "../Routes/Sign";
+import Googlesign from "../Routes/Googlesign";
 import Writing from "../Routes/Writing";
 import Detail from "../Routes/Detail";
 import Update from "../Routes/Update";
@@ -26,6 +27,7 @@ class Route1 extends Router{
                 <Route path="/Rhee/store" component={Store} />
                 <Route path="/Rhee/login" component={Login}/>
                 <Route path="/Rhee/sign" component={Sign}/>
+                <Route path="/Rhee/googlesign" component={Googlesign}/>
                 <Route path="/Rhee/writing" component={Writing}/>
                 <Route path="/Rhee/update/:id" component={Update}/>
                 <Route path="/Rhee/detail/:id"  component={Detail}/>
